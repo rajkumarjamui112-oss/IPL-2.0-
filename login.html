@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL 2.0 - Member Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .ipl-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .input-field {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #ef4444;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+        }
+        /* Modal Style */
+        #termsModal {
+            display: none;
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+
+<div class="ipl-card p-8 rounded-3xl w-full max-w-md mx-4">
+    <div class="text-center mb-8">
+        <div class="inline-block p-3 rounded-full bg-red-600 mb-4 shadow-lg shadow-red-500/50">
+            <i class="fas fa-user-lock text-2xl text-white"></i>
+        </div>
+        <h1 class="text-4xl font-extrabold text-white tracking-tighter">IPL <span class="text-red-500 text-5xl">2.0</span></h1>
+        <p class="text-gray-400 mt-2 text-sm uppercase tracking-widest font-semibold">Welcome Back, Player!</p>
+    </div>
+
+    <form id="loginForm" class="space-y-5">
+        <div>
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <input type="email" id="loginEmail" required 
+                    class="input-field block w-full pl-10 pr-3 py-3 rounded-xl text-sm" 
+                    placeholder="Email Address">
+            </div>
+        </div>
+
+        <div>
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                    <i class="fas fa-key"></i>
+                </span>
+                <input type="password" id="loginPassword" required 
+                    class="input-field block w-full pl-10 pr-3 py-3 rounded-xl text-sm" 
+                    placeholder="Password">
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between px-1">
+            <div class="flex items-center">
+                <input type="checkbox" id="loginTerms" required class="w-4 h-4 rounded border-gray-300 text-red-600">
+                <label for="loginTerms" class="ml-2 text-xs text-gray-400">Agree to Rules</label>
+            </div>
+            <button type="button" onclick="toggleModal(true)" class="text-xs text-red-500 font-bold hover:underline italic">
+                Read Rules & Terms
+            </button>
+        </div>
+
+        <button type="submit" 
+            class="w-full bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 text-white font-bold py-3.5 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-xl">
+            LOGIN NOW
+        </button>
+    </form>
+
+    <div class="mt-8 text-center border-t border-white/10 pt-6">
+        <p class="text-gray-400 text-sm">New to the League?</p>
+        <a href="register.html" 
+            class="mt-2 inline-block text-white font-bold border-b-2 border-red-500 pb-1 hover:text-red-500 transition-all">
+            Register New Account
+        </a>
+    </div>
+</div>
+
+<div id="termsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-white/20 w-full max-w-lg rounded-2xl p-6 shadow-2xl">
+        <div class="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
+            <h2 class="text-xl font-bold text-red-500">IPL 2.0 Terms & Rules</h2>
+            <button onclick="toggleModal(false)" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+        </div>
+        <div class="text-gray-300 text-sm space-y-3 overflow-y-auto max-h-80 pr-2">
+            <p><strong>1. Age Restriction:</strong> Must be 18+ years old to participate in any contest.</p>
+            <p><strong>2. State Restrictions:</strong> Users from Assam, Odisha, Telangana, Nagaland, and Andhra Pradesh are not allowed to play cash contests.</p>
+            <p><strong>3. Betting Rules:</strong> This platform is for skill-based sports entertainment. Any form of illegal gambling is strictly prohibited.</p>
+            <p><strong>4. Verification:</strong> Account must be KYC verified for any withdrawal requests.</p>
+            <p><strong>5. Fair Play:</strong> Using multiple accounts will lead to a permanent ban.</p>
+        </div>
+        <button onclick="toggleModal(false)" class="mt-6 w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 rounded-lg">
+            Close & I Understand
+        </button>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAj4SXI9ultqGO_AquyFbDj9bbUSuSoRqw",
+        authDomain: "ipl2-f8488.firebaseapp.com",
+        projectId: "ipl2-f8488",
+        storageBucket: "ipl2-f8488.firebasestorage.app",
+        messagingSenderId: "466468253752",
+        appId: "1:466468253752:web:12e2cd94b69072506e76cd",
+        measurementId: "G-V85QG85XYG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Login Functionality
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPassword').value;
+
+        try {
+            await signInWithEmailAndPassword(auth, email, pass);
+            alert("🔥 Welcome back! Login Successful.");
+            window.location.href = "dashboard.html"; // Change this to your home page
+        } catch (error) {
+            alert("❌ Login Failed: " + error.message);
+        }
+    });
+
+    // Modal Control
+    window.toggleModal = (show) => {
+        document.getElementById('termsModal').style.display = show ? 'flex' : 'none';
+    }
+</script>
+
+</body>
+</html>
