@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPL 2.0 - Secure Withdrawal</title>
+    <title>IPL 2.0 - Withdrawal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -18,16 +18,20 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; z-index: 100;
         }
 
-        .card-panel { background: #161d2f; border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 20px; margin-bottom: 20px; }
-        .input-field { background: #050810; border: 1px solid #1e293b; padding: 12px; border-radius: 12px; width: 100%; color: white; margin-top: 8px; outline: none; transition: 0.3s; }
-        .input-field:focus { border-color: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.1); }
-        
-        .locked-badge { background: rgba(34, 197, 94, 0.1); color: #22c55e; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: bold; border: 1px solid rgba(34, 197, 94, 0.2); }
-        .btn-main { width: 100%; padding: 15px; border-radius: 15px; font-weight: bold; font-size: 14px; transition: 0.3s; }
-        .btn-withdraw { background: linear-gradient(to right, #ef4444, #991b1b); color: white; box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3); }
-        .btn-save { background: white; color: black; }
-        
-        .history-item { background: rgba(22, 29, 47, 0.5); border-radius: 15px; padding: 15px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.03); display: flex; justify-content: space-between; align-items: center; }
+        .input-box { background: #161d2f; border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; width: 100%; color: white; outline: none; margin-top: 5px; transition: 0.3s; }
+        .input-box:disabled { color: #64748b; background: #0f172a; border-color: rgba(34, 197, 94, 0.3); cursor: not-allowed; }
+
+        .method-card {
+            background: #161d2f; border: 1px solid rgba(255,255,255,0.05);
+            padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s; flex: 1;
+        }
+        .method-card.active { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+
+        .history-item {
+            background: rgba(22, 29, 47, 0.5); border-radius: 12px; padding: 12px; margin-bottom: 10px; border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .lock-icon { color: #22c55e; font-size: 10px; margin-left: 5px; display: none; }
+        .is-locked .lock-icon { display: inline; }
     </style>
 </head>
 <body>
@@ -35,61 +39,60 @@
 <div class="mobile-view">
     <header>
         <div class="flex items-center gap-3">
-            <button onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
-            <h1 class="bebas text-2xl">WITHDRAWAL <span class="text-red-500">PORTAL</span></h1>
+            <button onclick="location.href='wallet.html'"><i class="fas fa-arrow-left"></i></button>
+            <h1 class="bebas text-2xl">WITHDRAW <span class="text-red-500">MONEY</span></h1>
         </div>
         <div class="text-right">
-            <p class="text-[8px] text-slate-500 font-bold uppercase">Balance</p>
+            <p class="text-[9px] text-slate-500 font-bold uppercase">Available</p>
             <p class="text-green-500 font-bold text-xs" id="headerBalance">₹ 0.00</p>
         </div>
     </header>
 
     <div class="p-4">
-        <div id="setupMode" class="hidden">
-            <div class="card-panel border-yellow-500/30 border">
-                <h3 class="bebas text-xl text-yellow-500 mb-2 tracking-wide">SETUP PAYMENT METHOD</h3>
-                <p class="text-[10px] text-slate-400 mb-6 font-medium uppercase tracking-tight italic">* Details once saved cannot be changed ever.</p>
-                
-                <p class="text-[10px] font-bold text-slate-500 uppercase">1. UPI Address</p>
-                <input type="text" id="setupUpi" class="input-field mb-5" placeholder="example@upi">
-                
-                <p class="text-[10px] font-bold text-slate-500 uppercase">2. Bank Details (Optional)</p>
-                <input type="text" id="setupBankName" class="input-field mb-2" placeholder="Account Holder Name">
-                <input type="number" id="setupBankAcc" class="input-field mb-2" placeholder="Account Number">
-                <input type="text" id="setupBankIfsc" class="input-field mb-6" placeholder="IFSC Code">
-                
-                <button onclick="saveDetailsToFirebase()" class="btn-main btn-save uppercase">Save Details Permanently</button>
+        <div class="bg-blue-500/10 border border-blue-500/20 p-3 rounded-xl mb-6 flex items-center gap-3">
+            <i class="fas fa-info-circle text-blue-500"></i>
+            <p class="text-[10px] text-blue-200">Daily Limit: <b>2 Withdrawals</b> | Min: <b>₹50</b></p>
+        </div>
+
+        <p class="text-[10px] text-slate-500 font-bold uppercase mb-2 tracking-widest">Enter Amount</p>
+        <input type="number" id="withdrawAmount" class="input-box text-2xl font-bold mb-6" placeholder="₹ 0.00">
+
+        <p class="text-[10px] text-slate-500 font-bold uppercase mb-3 tracking-widest">Select Method</p>
+        <div class="flex gap-3 mb-6">
+            <div class="method-card active" id="btnUpi" onclick="switchMethod('upi')">
+                <i class="fas fa-mobile-alt mb-1"></i>
+                <p class="text-[10px] font-bold">UPI ID</p>
+            </div>
+            <div class="method-card" id="btnBank" onclick="switchMethod('bank')">
+                <i class="fas fa-university mb-1"></i>
+                <p class="text-[10px] font-bold">BANK CARD</p>
             </div>
         </div>
 
-        <div id="withdrawMode" class="hidden">
-            <div class="card-panel">
-                <div class="flex justify-between items-center mb-6">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Enter Amount</p>
-                    <span class="locked-badge"><i class="fas fa-lock mr-1"></i> PAYOUT LOCKED</span>
-                </div>
-                
-                <input type="number" id="withdrawAmt" class="w-full bg-transparent text-center text-4xl font-bold text-white mb-8 focus:outline-none" placeholder="₹ 0">
-                
-                <div class="p-4 bg-black/40 rounded-xl border border-white/5 mb-6">
-                    <div class="flex justify-between mb-2">
-                        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Active UPI:</span>
-                        <span id="displayUpi" class="text-[10px] font-mono text-green-400 font-bold">---</span>
-                    </div>
-                    <div class="flex justify-between border-t border-white/5 pt-2">
-                        <span class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Limit Today:</span>
-                        <span id="dailyCountDisplay" class="text-[10px] text-white font-bold">0 / 2</span>
-                    </div>
-                </div>
-
-                <button onclick="submitWithdrawal()" class="btn-main btn-withdraw uppercase tracking-widest">Request Payout</button>
-            </div>
+        <div id="upiForm" class="method-group">
+            <label class="text-[10px] text-slate-400 font-bold uppercase flex items-center">Your UPI ID <span class="lock-icon" id="upiLock"><i class="fas fa-lock"></i> Locked</span></label>
+            <input type="text" id="upiIdInput" class="input-box mb-2" placeholder="Enter UPI ID (e.g. name@apl)">
+            <p id="upiLockMsg" class="text-[9px] text-slate-500 mb-6 italic">* Once added, UPI ID cannot be changed.</p>
         </div>
 
-        <div class="mt-8">
-            <h3 class="bebas text-xl tracking-wider mb-4 px-1">PAYOUT <span class="text-red-500">HISTORY</span></h3>
+        <div id="bankForm" class="method-group hidden">
+            <label class="text-[10px] text-slate-400 font-bold uppercase flex items-center">Bank Details <span class="lock-icon" id="bankLock"><i class="fas fa-lock"></i> Locked</span></label>
+            <input type="text" id="bankName" class="input-box mb-2" placeholder="Account Holder Name">
+            <input type="number" id="accNumber" class="input-box mb-2" placeholder="Account Number">
+            <input type="text" id="ifscCode" class="input-box mb-6" placeholder="IFSC Code">
+        </div>
+
+        <button onclick="requestWithdrawal()" id="withdrawBtn" class="w-full bg-red-600 py-4 rounded-xl font-bold text-sm shadow-lg shadow-red-900/30 active:scale-95 transition-transform">
+            PROCEED WITHDRAWAL
+        </button>
+
+        <div class="mt-10">
+            <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
+                <h3 class="bebas text-xl tracking-wider">WITHDRAWAL <span class="text-red-500">HISTORY</span></h3>
+                <i class="fas fa-history text-xs text-slate-500"></i>
+            </div>
             <div id="historyList">
-                <p class="text-center text-xs text-slate-600 py-6">Checking status...</p>
+                <p class="text-center text-[10px] text-slate-600 py-4">Loading history...</p>
             </div>
         </div>
     </div>
@@ -98,7 +101,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, onSnapshot, updateDoc, collection, addDoc, query, where, orderBy, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, onSnapshot, collection, addDoc, updateDoc, query, where, orderBy, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAj4SXI9ultqGO_AquyFbDj9bbUSuSoRqw",
@@ -113,112 +116,129 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    let currentMethod = 'upi';
     let currentUser = null;
     let userBalance = 0;
-    let userData = null;
+    let isUpiLocked = false;
+    let isBankLocked = false;
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
             currentUser = user;
-            loadUserCoreData();
-            loadWithdrawalHistory();
+            loadUserData(user.uid);
+            loadHistory(user.uid);
         } else window.location.href = "login.html";
     });
 
-    async function loadUserCoreData() {
-        onSnapshot(doc(db, "users", currentUser.uid), (docSnap) => {
+    function loadUserData(uid) {
+        onSnapshot(doc(db, "users", uid), (docSnap) => {
             if (docSnap.exists()) {
-                userData = docSnap.data();
-                userBalance = userData.balance || 0;
+                const data = docSnap.data();
+                userBalance = data.balance || 0;
                 document.getElementById('headerBalance').innerText = '₹ ' + userBalance.toFixed(2);
-                
-                // Logic: Details saved hain ya nahi?
-                if (userData.payout_setup === true) {
-                    document.getElementById('withdrawMode').classList.remove('hidden');
-                    document.getElementById('setupMode').classList.add('hidden');
-                    document.getElementById('displayUpi').innerText = userData.withdrawalUpi;
-                } else {
-                    document.getElementById('setupMode').classList.remove('hidden');
-                    document.getElementById('withdrawMode').classList.add('hidden');
+
+                // Lock UPI if exists
+                if (data.withdrawalUpi) {
+                    isUpiLocked = true;
+                    document.getElementById('upiIdInput').value = data.withdrawalUpi;
+                    document.getElementById('upiIdInput').disabled = true;
+                    document.getElementById('upiForm').classList.add('is-locked');
+                    document.getElementById('upiLockMsg').innerText = "✅ UPI Details are permanently locked.";
+                }
+
+                // Lock Bank if exists
+                if (data.bankDetails) {
+                    isBankLocked = true;
+                    document.getElementById('bankName').value = data.bankDetails.name;
+                    document.getElementById('accNumber').value = data.bankDetails.acc;
+                    document.getElementById('ifscCode').value = data.bankDetails.ifsc;
+                    document.getElementById('bankName').disabled = true;
+                    document.getElementById('accNumber').disabled = true;
+                    document.getElementById('ifscCode').disabled = true;
+                    document.getElementById('bankForm').classList.add('is-locked');
                 }
             }
         });
-        checkDailyLimit();
     }
 
-    window.saveDetailsToFirebase = async () => {
-        const upi = document.getElementById('setupUpi').value;
-        if (!upi) return alert("Please enter at least UPI ID.");
+    window.switchMethod = (m) => {
+        currentMethod = m;
+        document.querySelectorAll('.method-card').forEach(c => c.classList.remove('active'));
+        if(m === 'upi') {
+            document.getElementById('btnUpi').classList.add('active');
+            document.getElementById('upiForm').classList.remove('hidden');
+            document.getElementById('bankForm').classList.add('hidden');
+        } else {
+            document.getElementById('btnBank').classList.add('active');
+            document.getElementById('bankForm').classList.remove('hidden');
+            document.getElementById('upiForm').classList.add('hidden');
+        }
+    }
+
+    window.requestWithdrawal = async () => {
+        const amount = parseFloat(document.getElementById('withdrawAmount').value);
+        if (!amount || amount < 50) return alert("Minimum withdrawal is ₹50");
+        if (amount > userBalance) return alert("Insufficient Balance!");
+
+        // Daily Limit Check
+        const startOfDay = new Date(); startOfDay.setHours(0,0,0,0);
+        const q = query(collection(db, "withdrawals"), 
+            where("userId", "==", currentUser.uid), 
+            where("timestamp", ">=", startOfDay));
+        const todayWithdrawals = await getDocs(q);
+        if (todayWithdrawals.size >= 2) return alert("Daily limit reached! (2 per day)");
+
+        const upiValue = document.getElementById('upiIdInput').value;
+        const bName = document.getElementById('bankName').value;
+        const bAcc = document.getElementById('accNumber').value;
+        const bIfsc = document.getElementById('ifscCode').value;
+
+        if (currentMethod === 'upi' && !upiValue) return alert("Enter UPI ID");
+        if (currentMethod === 'bank' && (!bName || !bAcc || !bIfsc)) return alert("Fill all bank details");
 
         try {
-            await updateDoc(doc(db, "users", currentUser.uid), {
-                withdrawalUpi: upi,
-                bankDetails: {
-                    name: document.getElementById('setupBankName').value,
-                    acc: document.getElementById('setupBankAcc').value,
-                    ifsc: document.getElementById('setupBankIfsc').value
-                },
-                payout_setup: true
-            });
-            alert("Details Saved & Locked Successfully!");
-        } catch (e) { alert(e.message); }
-    };
+            // Deduct Balance & Permanent Lock Logic
+            const updateData = { balance: userBalance - amount };
+            
+            // Agar pehle se lock nahi hai, toh ab lock kar do
+            if (!isUpiLocked && currentMethod === 'upi') updateData.withdrawalUpi = upiValue;
+            if (!isBankLocked && currentMethod === 'bank') {
+                updateData.bankDetails = { name: bName, acc: bAcc, ifsc: bIfsc };
+            }
 
-    window.submitWithdrawal = async () => {
-        const amt = parseFloat(document.getElementById('withdrawAmt').value);
-        
-        if (amt < 50) return alert("Minimum withdrawal ₹50");
-        if (amt > userBalance) return alert("Insufficient funds!");
-        
-        // Final Daily Limit Check
-        const count = await checkDailyLimit();
-        if (count >= 2) return alert("Daily limit of 2 withdrawals reached!");
+            await updateDoc(doc(db, "users", currentUser.uid), updateData);
 
-        try {
-            // Subtract Balance
-            await updateDoc(doc(db, "users", currentUser.uid), {
-                balance: userBalance - amt
-            });
-
-            // Log Withdrawal
             await addDoc(collection(db, "withdrawals"), {
                 userId: currentUser.uid,
-                amount: amt,
+                amount: amount,
+                method: currentMethod,
+                details: currentMethod === 'upi' ? upiValue : { bName, bAcc, bIfsc },
                 status: "Pending",
-                timestamp: serverTimestamp(),
-                upi: userData.withdrawalUpi
+                timestamp: serverTimestamp()
             });
 
-            alert("Request Submitted Successfully!");
-            document.getElementById('withdrawAmt').value = "";
+            alert("Withdrawal Successful! Details are now locked.");
+            document.getElementById('withdrawAmount').value = "";
         } catch (e) { alert(e.message); }
     };
 
-    async function checkDailyLimit() {
-        const startOfDay = new Date(); startOfDay.setHours(0,0,0,0);
-        const q = query(collection(db, "withdrawals"), where("userId", "==", currentUser.uid), where("timestamp", ">=", startOfDay));
-        const snap = await getDocs(q);
-        document.getElementById('dailyCountDisplay').innerText = `${snap.size} / 2`;
-        return snap.size;
-    }
-
-    function loadWithdrawalHistory() {
-        const q = query(collection(db, "withdrawals"), where("userId", "==", currentUser.uid), orderBy("timestamp", "desc"));
-        onSnapshot(q, (snap) => {
+    function loadHistory(uid) {
+        const q = query(collection(db, "withdrawals"), where("userId", "==", uid), orderBy("timestamp", "desc"));
+        onSnapshot(q, (snapshot) => {
             let html = "";
-            if (snap.empty) html = "<p class='text-center text-xs text-slate-600 italic py-6'>No payouts requested.</p>";
-            snap.forEach(doc => {
-                const d = doc.data();
-                const color = d.status === "Pending" ? "text-yellow-500" : (d.status === "Success" ? "text-green-500" : "text-red-500");
+            if (snapshot.empty) html = "<p class='text-center text-[10px] text-slate-600 py-4'>No transactions yet.</p>";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const color = data.status === "Pending" ? "text-yellow-500" : (data.status === "Success" ? "text-green-500" : "text-red-500");
                 html += `
-                    <div class="history-item">
+                    <div class="history-item flex justify-between items-center">
                         <div>
-                            <p class="text-sm font-bold tracking-wide">₹${d.amount}</p>
-                            <p class="text-[8px] text-slate-500 font-bold uppercase tracking-widest">${new Date(d.timestamp?.toDate()).toLocaleString()}</p>
+                            <p class="text-[11px] font-bold">₹${data.amount}</p>
+                            <p class="text-[8px] text-slate-500 uppercase">${data.method}</p>
                         </div>
                         <div class="text-right">
-                            <span class="text-[9px] font-black ${color} uppercase tracking-widest">${d.status}</span>
-                            <p class="text-[7px] text-slate-600 mt-1">Ref: ${doc.id.substring(0,8)}</p>
+                            <p class="text-[9px] font-bold ${color}">${data.status.toUpperCase()}</p>
+                            <p class="text-[7px] text-slate-600">${data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString() : 'Just now'}</p>
                         </div>
                     </div>`;
             });
@@ -226,6 +246,5 @@
         });
     }
 </script>
-
 </body>
 </html>
