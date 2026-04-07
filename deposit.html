@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPL 2.0 - Deposit Money</title>
+    <title>IPL 2.0 - Deposit Funds</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600&display=swap');
-        body { background-color: #050810; color: white; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 40px; display: flex; justify-content: center; }
+        body { background-color: #050810; color: white; font-family: 'Poppins', sans-serif; margin: 0; padding-bottom: 50px; display: flex; justify-content: center; }
         .bebas { font-family: 'Bebas Neue', sans-serif; }
         .mobile-view { width: 100%; max-width: 480px; background: #0a1122; min-height: 100vh; position: relative; }
         
@@ -18,19 +18,28 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); position: sticky; top: 0; z-index: 100;
         }
 
+        .gateway-card {
+            background: #161d2f; border: 1px solid rgba(255,255,255,0.05);
+            padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s;
+        }
+        .gateway-card.active { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .gateway-card img { width: 30px; height: 30px; object-fit: contain; }
+
+        /* Package Styles - Grid adjusted for 5 items */
         .pkg-card {
             background: #161d2f; border: 1px solid rgba(255,255,255,0.05);
-            padding: 15px; border-radius: 15px; text-align: center; cursor: pointer; transition: 0.3s;
+            padding: 8px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s;
         }
         .pkg-card.active { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); transform: scale(1.05); }
 
-        .qr-container {
-            background: white; padding: 15px; border-radius: 15px; width: 200px; height: 200px;
-            margin: 20px auto; display: flex; align-items: center; justify-content: center;
+        .qr-box {
+            background: white; padding: 10px; border-radius: 12px; width: 180px; height: 180px;
+            margin: 15px auto; display: flex; align-items: center; justify-content: center;
         }
-        
-        .btn-pay { background: linear-gradient(to right, #ef4444, #b91c1c); width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; margin-top: 20px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
-        .input-utr { background: #050810; border: 1px solid #1e293b; padding: 12px; border-radius: 10px; width: 100%; color: white; outline: none; margin-top: 10px; }
+
+        .history-item {
+            background: rgba(22, 29, 47, 0.5); border-radius: 12px; padding: 12px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.03);
+        }
     </style>
 </head>
 <body>
@@ -38,62 +47,73 @@
 <div class="mobile-view">
     <header>
         <div class="flex items-center gap-3">
-            <button onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
-            <h1 class="bebas text-2xl">DEPOSIT <span class="text-red-500">FUNDS</span></h1>
+            <button onclick="location.href='home.html'"><i class="fas fa-arrow-left"></i></button>
+            <h1 class="bebas text-2xl">DEPOSIT <span class="text-red-500">GATEWAY</span></h1>
         </div>
-        <button onclick="location.href='deposit_history.html'"><i class="fas fa-history text-xl text-slate-400"></i></button>
+        <div class="text-right">
+            <p class="text-[9px] text-slate-500 font-bold uppercase">Balance</p>
+            <p class="text-green-500 font-bold text-xs" id="headerBalance">₹ 0.00</p>
+        </div>
     </header>
 
-    <div class="p-5">
-        <p class="text-xs text-slate-400 font-bold uppercase mb-4 tracking-widest">1. Select Deposit Amount</p>
-        <div class="grid grid-cols-3 gap-3 mb-8">
-            <div class="pkg-card active" onclick="selectPkg(this, 10)">
-                <p class="text-[10px] text-slate-500 font-bold">STARTER</p>
-                <p class="bebas text-xl">₹10</p>
+    <div class="p-4">
+        <p class="text-[10px] text-slate-500 font-bold uppercase mb-3 tracking-widest">1. Choose Payment Method</p>
+        <div class="grid grid-cols-2 gap-3 mb-6">
+            <div class="gateway-card active" onclick="selectGateway(this, 'UPI')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI">
+                <span class="text-xs font-bold">UPI PAY</span>
             </div>
-            <div class="pkg-card" onclick="selectPkg(this, 100)">
-                <p class="text-[10px] text-slate-500 font-bold">PRO</p>
-                <p class="bebas text-xl">₹100</p>
-            </div>
-            <div class="pkg-card" onclick="selectPkg(this, 500)">
-                <p class="text-[10px] text-slate-500 font-bold">ELITE</p>
-                <p class="bebas text-xl">₹500</p>
+            <div class="gateway-card" onclick="selectGateway(this, 'Paytm')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" alt="Paytm">
+                <span class="text-xs font-bold">PAYTM</span>
             </div>
         </div>
 
-        <div class="bg-[#161d2f] rounded-3xl p-6 border border-white/5 text-center">
-            <p class="text-xs text-slate-400 font-bold uppercase mb-4">2. Scan & Pay</p>
-            
-            <div class="qr-container">
-                <img id="qrCode" src="" alt="QR Code">
-            </div>
+        <p class="text-[10px] text-slate-500 font-bold uppercase mb-3 tracking-widest">2. Select Amount</p>
+        <div class="grid grid-cols-5 gap-2 mb-6">
+            <div class="pkg-card active" onclick="selectPkg(this, 10)"><p class="bebas text-lg">₹10</p></div>
+            <div class="pkg-card" onclick="selectPkg(this, 30)"><p class="bebas text-lg">₹30</p></div>
+            <div class="pkg-card" onclick="selectPkg(this, 50)"><p class="bebas text-lg">₹50</p></div>
+            <div class="pkg-card" onclick="selectPkg(this, 100)"><p class="bebas text-lg">₹100</p></div>
+            <div class="pkg-card" onclick="selectPkg(this, 500)"><p class="bebas text-lg">₹500</p></div>
+        </div>
 
+        <div class="bg-[#161d2f] rounded-3xl p-5 border border-white/5 text-center mb-6">
+            <div class="qr-box shadow-xl"><img id="qrCode" src="" alt="QR"></div>
+            
             <div class="flex items-center justify-between bg-black/40 p-3 rounded-xl border border-white/10 mb-4">
-                <span class="text-[10px] font-mono text-slate-300" id="upiId">investpro4449@axl</span>
+                <span class="text-[11px] font-mono text-slate-300">investpro4449@axl</span>
                 <button onclick="copyUpi()" class="text-red-500 text-[10px] font-bold">COPY ID</button>
             </div>
 
-            <button onclick="payNowIntent()" class="btn-pay">
-                <i class="fas fa-mobile-alt mr-2"></i> PAY VIA UPI APPS
+            <button onclick="payNowIntent()" class="w-full bg-red-600 py-4 rounded-xl font-bold text-sm shadow-lg shadow-red-900/30">
+                <i class="fas fa-bolt mr-2"></i> PAY NOW VIA APP
             </button>
         </div>
 
-        <div class="mt-8 px-2">
-            <p class="text-xs text-slate-400 font-bold uppercase mb-2 ml-1">3. Submit UTR / Ref No.</p>
-            <input type="number" id="utrInput" class="input-utr" placeholder="Enter 12 Digit UTR Number">
-            <button onclick="submitDeposit()" class="w-full bg-slate-800 py-4 rounded-xl mt-4 font-bold text-sm border border-white/10">SUBMIT TRANSACTION</button>
+        <div class="bg-black/20 p-4 rounded-2xl border border-white/5 mb-8">
+            <p class="text-[10px] text-slate-500 font-bold uppercase mb-2 text-center">Step 3: Paste UTR Number</p>
+            <input type="number" id="utrInput" class="w-full bg-[#050810] border border-slate-800 p-4 rounded-xl text-white outline-none text-center tracking-widest" placeholder="12 Digit Ref Number">
+            <button onclick="submitDeposit()" class="w-full bg-slate-800 py-3 rounded-xl mt-3 font-bold text-xs border border-white/10">SUBMIT TRANSACTION</button>
         </div>
 
-        <p class="text-[10px] text-slate-500 text-center mt-10">
-            <i class="fas fa-shield-alt text-green-500"></i> Your payment is 100% encrypted and secure.
-        </p>
+        <div class="mt-4">
+            <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
+                <h3 class="bebas text-xl tracking-wider">DEPOSIT <span class="text-red-500">HISTORY</span></h3>
+                <i class="fas fa-sync-alt text-xs text-slate-500"></i>
+            </div>
+            
+            <div id="historyList">
+                <p class="text-center text-[10px] text-slate-600 py-4">Loading history...</p>
+            </div>
+        </div>
     </div>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, onSnapshot, collection, addDoc, query, where, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAj4SXI9ultqGO_AquyFbDj9bbUSuSoRqw",
@@ -109,26 +129,66 @@
     const db = getFirestore(app);
 
     let selectedAmount = 10;
+    let selectedMethod = "UPI";
     const upi = "investpro4449@axl";
     let currentUser = null;
 
     onAuthStateChanged(auth, (user) => {
-        if (user) currentUser = user;
-        else window.location.href = "login.html";
+        if (user) {
+            currentUser = user;
+            loadBalance(user.uid);
+            loadHistory(user.uid);
+        } else window.location.href = "login.html";
     });
 
-    // Function to generate QR
-    function updateQR() {
-        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${upi}&pn=IPL2ARENA&am=${selectedAmount}&cu=INR`;
-        document.getElementById('qrCode').src = qrUrl;
+    function loadBalance(uid) {
+        onSnapshot(doc(db, "users", uid), (doc) => {
+            if (doc.exists()) document.getElementById('headerBalance').innerText = '₹ ' + (doc.data().balance || 0).toFixed(2);
+        });
     }
 
-    window.selectPkg = (element, amount) => {
-        document.querySelectorAll('.pkg-card').forEach(card => card.classList.remove('active'));
-        element.classList.add('active');
+    function loadHistory(uid) {
+        const q = query(collection(db, "deposits"), where("userId", "==", uid), orderBy("timestamp", "desc"));
+        onSnapshot(q, (snapshot) => {
+            let html = "";
+            if (snapshot.empty) html = "<p class='text-center text-xs text-slate-600'>No transactions yet.</p>";
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const color = data.status === "Pending" ? "text-yellow-500" : (data.status === "Success" ? "text-green-500" : "text-red-500");
+                html += `
+                    <div class="history-item flex justify-between items-center">
+                        <div>
+                            <p class="text-[11px] font-bold">₹${data.amount}</p>
+                            <p class="text-[8px] text-slate-500">${data.utr}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[9px] font-bold ${color}">${data.status.toUpperCase()}</p>
+                            <p class="text-[8px] text-slate-600 italic">ID: ${doc.id.substring(0,6)}</p>
+                        </div>
+                    </div>`;
+            });
+            document.getElementById('historyList').innerHTML = html;
+        });
+    }
+
+    window.selectGateway = (el, method) => {
+        document.querySelectorAll('.gateway-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        selectedMethod = method;
+        updateQR();
+    };
+
+    window.selectPkg = (el, amount) => {
+        document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
         selectedAmount = amount;
         updateQR();
     };
+
+    function updateQR() {
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=${upi}&pn=IPL2ARENA&am=${selectedAmount}&cu=INR`;
+        document.getElementById('qrCode').src = qrUrl;
+    }
 
     window.copyUpi = () => {
         navigator.clipboard.writeText(upi);
@@ -136,36 +196,28 @@
     };
 
     window.payNowIntent = () => {
-        const intentUrl = `upi://pay?pa=${upi}&pn=IPL2ARENA&am=${selectedAmount}&cu=INR`;
-        window.location.href = intentUrl;
+        window.location.href = `upi://pay?pa=${upi}&pn=IPL2ARENA&am=${selectedAmount}&cu=INR`;
     };
 
     window.submitDeposit = async () => {
         const utr = document.getElementById('utrInput').value;
-        if(utr.length < 10) {
-            alert("Please enter a valid 12-digit UTR number.");
-            return;
-        }
-
+        if(utr.length < 10) return alert("Enter valid UTR!");
+        
         try {
             await addDoc(collection(db, "deposits"), {
                 userId: currentUser.uid,
-                email: currentUser.email,
                 amount: selectedAmount,
                 utr: utr,
+                method: selectedMethod,
                 status: "Pending",
                 timestamp: serverTimestamp()
             });
-            alert("Deposit submitted! Balance will be added after verification.");
-            window.location.href = "home.html";
-        } catch (e) {
-            alert("Error: " + e.message);
-        }
+            alert("Payment Submitted Successfully!");
+            document.getElementById('utrInput').value = "";
+        } catch (e) { alert(e.message); }
     };
 
-    // Initial QR Load
     updateQR();
 </script>
-
 </body>
 </html>
