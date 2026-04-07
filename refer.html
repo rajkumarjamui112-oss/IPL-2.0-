@@ -27,6 +27,7 @@
             background: #0a1122;
             min-height: 100vh;
             position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
         header {
@@ -45,7 +46,7 @@
         }
         .logo-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Banner with refer.png */
+        /* Refer Banner Image */
         .refer-banner {
             width: calc(100% - 30px);
             height: 180px;
@@ -55,45 +56,36 @@
             background-size: cover;
             background-position: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
-        .stats-card {
+        .action-card {
             background: #161d2f;
             border-radius: 20px;
             padding: 20px;
-            margin: 20px 15px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            margin: 0 15px 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .stat-box {
+        .code-display {
             background: #050810;
+            border: 2px dashed #ef4444;
             padding: 15px;
             border-radius: 15px;
             text-align: center;
-            border: 1px solid #1e293b;
+            margin-bottom: 15px;
         }
 
-        .code-box {
-            background: #050810;
-            border: 1.5px dashed #ef4444;
-            padding: 15px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 0 15px;
-        }
+        .btn-copy { background: #3b82f6; color: white; width: 100%; padding: 12px; border-radius: 12px; font-weight: bold; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
+        .btn-whatsapp { background: #25d366; color: white; width: 100%; padding: 12px; border-radius: 12px; font-weight: bold; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; transition: 0.3s; }
+        
+        .btn-copy:active, .btn-whatsapp:active { transform: scale(0.98); }
 
         .bottom-nav {
             position: fixed; bottom: 0; width: 100%; max-width: 480px;
             background: #0f172a; display: flex; justify-content: space-around;
             padding: 12px 0; border-top: 1px solid rgba(255, 255, 255, 0.05); z-index: 1000;
         }
-        .nav-item { text-align: center; color: #64748b; font-size: 11px; transition: 0.3s; }
+        .nav-item { text-align: center; color: #64748b; font-size: 11px; text-decoration: none; transition: 0.3s; }
         .nav-item.active { color: #ef4444; }
         .nav-item i { font-size: 22px; display: block; margin-bottom: 4px; }
     </style>
@@ -115,45 +107,57 @@
 
     <div class="refer-banner"></div>
 
-    <div class="mt-6">
-        <p class="text-[10px] text-slate-500 font-bold uppercase mb-2 ml-5 tracking-widest">Share Your Code</p>
-        <div class="code-box">
-            <span id="referCode" class="bebas text-2xl tracking-[0.2em] text-white">GEN-CODE</span>
-            <button onclick="copyCode()" class="bg-red-600 text-white p-2 px-5 rounded-lg text-[10px] font-bold shadow-lg shadow-red-900/40">COPY</button>
+    <div class="action-card">
+        <p class="text-[10px] text-slate-500 font-bold uppercase mb-3 text-center tracking-widest">Share Your Referral Code</p>
+        <div class="code-display">
+            <span id="referCode" class="bebas text-3xl tracking-[0.3em] text-white">------</span>
+        </div>
+        
+        <div class="flex flex-col">
+            <button onclick="copyReferLink()" class="btn-copy">
+                <i class="fas fa-copy"></i> COPY REFER LINK
+            </button>
+            <button onclick="shareWhatsApp()" class="btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> SHARE ON WHATSAPP
+            </button>
         </div>
     </div>
 
-    <div class="stats-card">
-        <div class="stat-box">
-            <i class="fas fa-users text-blue-500 mb-2"></i>
-            <p class="text-[9px] text-slate-500 font-bold uppercase">Total Refer</p>
-            <p class="bebas text-2xl" id="totalRefer">5</p>
+    <div class="grid grid-cols-2 gap-4 px-4 mb-6">
+        <div class="bg-[#161d2f] p-4 rounded-2xl border border-white/5 text-center shadow-lg">
+            <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Total Refer</p>
+            <p class="bebas text-3xl text-white" id="totalRefer">0</p>
         </div>
-        <div class="stat-box">
-            <i class="fas fa-coins text-yellow-500 mb-2"></i>
-            <p class="text-[9px] text-slate-500 font-bold uppercase">Total Earned</p>
-            <p class="bebas text-2xl text-green-500">₹<span id="totalEarned">500</span></p>
+        <div class="bg-[#161d2f] p-4 rounded-2xl border border-white/5 text-center shadow-lg">
+            <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Total Earned</p>
+            <p class="bebas text-3xl text-green-500">₹<span id="totalEarned">0</span></p>
         </div>
-    </div>
-
-    <div class="px-6 text-center">
-        <p class="text-[11px] text-slate-400 font-medium leading-relaxed">
-            Invite your friends to IPL 2.0 Arena and get <span class="text-red-500 font-bold">₹100</span> bonus for every successful registration!
-        </p>
     </div>
 
     <nav class="bottom-nav">
-        <a href="home.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="refer.html" class="nav-item active"><i class="fas fa-gift"></i><span>Refer</span></a>
-        <a href="wallet.html" class="nav-item"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-        <a href="account.html" class="nav-item"><i class="fas fa-user-circle"></i><span>Account</span></a>
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="refer.html" class="nav-item active">
+            <i class="fas fa-gift"></i>
+            <span>Refer</span>
+        </a>
+        <a href="wallet.html" class="nav-item">
+            <i class="fas fa-wallet"></i>
+            <span>Wallet</span>
+        </a>
+        <a href="account.html" class="nav-item">
+            <i class="fas fa-user-circle"></i>
+            <span>Account</span>
+        </a>
     </nav>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, onSnapshot, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAj4SXI9ultqGO_AquyFbDj9bbUSuSoRqw",
@@ -168,22 +172,21 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            // Generate 6 letter code if not exists
-            const shortCode = user.uid.substring(0, 6).toUpperCase();
-            document.getElementById('referCode').innerText = shortCode;
+    let myReferCode = "";
 
-            const userRef = doc(db, "users", user.uid);
-            
-            // Listen for Real-time Balance & Refer Stats
-            onSnapshot(userRef, (docSnap) => {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // Generate Code instantly from UID
+            myReferCode = user.uid.substring(0, 6).toUpperCase();
+            document.getElementById('referCode').innerText = myReferCode;
+
+            // Listen for Real-time Balance, Total Refer, and Total Earned
+            onSnapshot(doc(db, "users", user.uid), (docSnap) => {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     document.getElementById('userBalance').innerText = '₹ ' + (data.balance || 0).toFixed(2);
-                    // Agar stats firestore mein hain toh waha se lo, warna default dikhao
-                    document.getElementById('totalRefer').innerText = data.totalRefer || 5;
-                    document.getElementById('totalEarned').innerText = data.totalEarned || 500;
+                    document.getElementById('totalRefer').innerText = data.totalRefer || 0;
+                    document.getElementById('totalEarned').innerText = data.totalEarned || 0;
                 }
             });
         } else {
@@ -191,11 +194,21 @@
         }
     });
 
-    window.copyCode = () => {
-        const code = document.getElementById('referCode').innerText;
-        navigator.clipboard.writeText(code);
-        alert("Referral Code Copied: " + code);
+    // Copy Refer Link
+    window.copyReferLink = () => {
+        const link = window.location.origin + "/register.html?ref=" + myReferCode;
+        navigator.clipboard.writeText(link).then(() => {
+            alert("Refer Link Copied Success!");
+        });
+    };
+
+    // WhatsApp Share
+    window.shareWhatsApp = () => {
+        const link = window.location.origin + "/register.html?ref=" + myReferCode;
+        const text = `🏏 *IPL 2.0 ARENA* 🏏\nJoin using my code: *${myReferCode}* and win big rewards daily!\nRegister now: ${link}`;
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     };
 </script>
+
 </body>
 </html>
