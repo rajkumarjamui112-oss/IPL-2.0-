@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPL 2.0 - Official Home</title>
+    <title>IPL 2.0 - Official Home Arena</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -12,43 +12,63 @@
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Poppins:wght@300;400;600&display=swap');
 
         body {
-            background-color: #0b0f1a;
+            background-color: #0b0f1a; /* Modern Deep Dark Blue */
             color: white;
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            padding-bottom: 80px;
+            padding-bottom: 85px; /* Perfect space for Bottom Nav */
             overflow-x: hidden;
         }
 
         .oswald { font-family: 'Oswald', sans-serif; }
 
-        /* Header Fix */
+        /* Mobile Container to center on desktop */
+        .mobile-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #111827;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        /* Header Style */
         header {
-            background: #161d2f;
-            padding: 12px 15px;
+            background: #1f2937;
+            padding: 15px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 2px solid #ef4444; /* Sporty Red Accent */
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
-        .logo-round {
-            width: 40px;
-            height: 40px;
+        /* Full Shape Logo Container */
+        .logo-full-shape {
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            border: 2px solid #ef4444;
+            border: 2px solid #ef4444; /* Match header border */
             overflow: hidden;
             background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Banner Slider Size */
+        .logo-full-shape img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Images ko box ke size mein full fit karega */
+        }
+
+        /* Swiper Slider Styling */
         .swiper {
             width: 100%;
-            height: 180px; /* Perfect for Mobile */
-            margin: 15px 0;
+            height: 190px;
+            margin-top: 15px;
         }
 
         .swiper-slide {
@@ -63,168 +83,229 @@
             object-fit: cover;
         }
 
+        /* Gradient Overlay for Text Visibility */
         .banner-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end;
             padding: 20px;
         }
 
-        /* Match Cards */
+        /* Betting Match Cards */
         .match-card {
-            background: #1c2437;
+            background: #1f2937;
             border-radius: 16px;
-            border-left: 4px solid #ef4444;
+            border-left: 5px solid #ef4444; /* Team Red Vibe */
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.4);
         }
 
-        /* Bottom Nav Fix */
+        /* Team Logos in Card */
+        .team-logo-small {
+            width: 40px; height: 40px;
+            object-fit: contain;
+        }
+
+        /* Bottom Nav Fix for Visibility */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             width: 100%;
-            max-width: 500px; /* For Desktop Centering */
+            max-width: 480px; /* Stay within mobile view */
             left: 50%;
             transform: translateX(-50%);
-            background: #161d2f;
+            background: #111827;
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            z-index: 1000;
+            padding: 15px 0;
+            border-top: 2px solid rgba(255,255,255,0.05);
+            z-index: 2000;
         }
 
         .nav-link {
             text-align: center;
-            color: #64748b;
-            font-size: 10px;
+            color: #9ca3af; /* More visible light gray */
+            font-size: 11px;
             text-decoration: none;
             transition: 0.3s;
+            position: relative;
         }
 
         .nav-link.active { color: #ef4444; }
-        .nav-link i { font-size: 20px; margin-bottom: 3px; display: block; }
+        .nav-link i { font-size: 24px; margin-bottom: 5px; display: block; }
+
+        /* Bid Buttons Visibility */
+        .bid-btn {
+            flex: 1;
+            background: #111827; /* Dark background */
+            border: 1px solid #ef4444; /* Visible red border */
+            color: #ef4444;
+            py: 3;
+            rounded-lg:;
+            text-[12px]:;
+            font-bold:;
+            transition: 0.3s;
+        }
+
+        .bid-btn:hover {
+            background: #ef4444;
+            color: white;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
     </style>
 </head>
-<body class="max-w-[500px] mx-auto shadow-2xl bg-slate-950">
+<body>
 
-    <header>
-        <div class="flex items-center gap-3" onclick="location.href='account.html'">
-            <div class="logo-round">
-                <img src="logo.png" alt="User" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+    <div class="mobile-container">
+        <header>
+            <div class="flex items-center gap-3">
+                <div class="logo-full-shape">
+                    <img src="logo.png" alt="IPL Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3504/3504113.png'">
+                </div>
+                <div>
+                    <h1 class="oswald text-lg font-bold">IPL <span class="text-red-500">2.0</span> ARENA</h1>
+                    <p class="text-[10px] text-slate-400">Trusted Betting Platform</p>
+                </div>
             </div>
-            <div>
-                <p class="text-[10px] text-slate-400">Welcome Back,</p>
-                <h1 class="text-xs font-bold">IPL PLAYER</h1>
+            <div class="bg-black/50 px-4 py-2 rounded-full border border-red-500/30">
+                <p class="text-[10px] text-slate-500 font-medium">BALANCE</p>
+                <p class="text-sm font-bold text-green-500" id="userBalance">₹ 0.00</p>
             </div>
-        </div>
-        <div class="bg-slate-800 px-3 py-1.5 rounded-full flex items-center gap-2 border border-slate-700">
-            <i class="fas fa-wallet text-yellow-500 text-xs"></i>
-            <span class="text-xs font-bold text-green-500">₹ 500.00</span>
-        </div>
-    </header>
+        </header>
 
-    <div class="px-4">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="https://img.freepik.com/premium-photo/cricket-stadium-with-night-lights_372999-158.jpg" alt="IPL Banner">
-                    <div class="banner-overlay">
-                        <h2 class="oswald text-xl font-bold text-white">WELCOME TO IPL 2.0</h2>
-                        <p class="text-[10px] text-yellow-400">India's Most Trusted Betting Arena</p>
-                        <button class="mt-2 bg-red-600 text-[10px] w-24 py-1.5 rounded font-bold">JOIN NOW</button>
+        <div class="px-4">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=2067" alt="Tata IPL Stadium">
+                        <div class="banner-overlay">
+                            <h2 class="oswald text-2xl font-bold text-white tracking-tight">WELCOME TO THE LEAGUE!</h2>
+                            <p class="text-xs text-yellow-400 font-medium">Predict TATA IPL matches & Win Big Rewards.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://wallpapers.com/images/high/rohit-sharma-mumbai-indians-h63k0p3b4c194b1g.webp" alt="MI Team">
+                        <div class="banner-overlay">
+                            <h2 class="oswald text-2xl font-bold text-white tracking-tight italic">JOIN THE PALACE</h2>
+                            <p class="text-xs text-blue-300 font-medium">Will MI clinch the 6th title? Back your team!</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://c4.wallpaperflare.com/wallpaper/325/444/220/mahendra-singh-dhoni-indian-premier-league-indian-cricket-team-chennai-super-kings-cricket-hd-wallpaper-thumb.jpg" alt="CSK Team">
+                        <div class="banner-overlay">
+                            <h2 class="oswald text-2xl font-bold text-white tracking-tight">SUPER KINGS LEAGUE</h2>
+                            <p class="text-xs text-green-300 font-medium">Back Dhoni & Co. for another dominant season!</p>
+                        </div>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://img.freepik.com/premium-vector/realistic-cricket-championship-banner_23-2148208466.jpg" alt="IPL Teams">
-                    <div class="banner-overlay">
-                        <h2 class="oswald text-xl font-bold text-white">ALL TATA IPL TEAMS</h2>
-                        <p class="text-[10px] text-blue-300">Predict & Win on Your Favorite Team</p>
-                        <button class="mt-2 bg-blue-600 text-[10px] w-24 py-1.5 rounded font-bold">VIEW ODDS</button>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <div class="px-4 mt-6">
+            <div class="flex justify-between items-center mb-4 border-b border-white/5 pb-2">
+                <h3 class="oswald text-sm font-bold text-slate-200 uppercase tracking-widest">Live & Upcoming</h3>
+                <div class="flex items-center gap-1.5">
+                    <span class="h-2.5 w-2.5 rounded-full bg-red-600 animate-pulse"></span>
+                    <span class="text-xs text-red-500 font-bold uppercase">LIVE</span>
+                </div>
+            </div>
+
+            <div class="match-card p-5 mb-5">
+                <div class="flex justify-between text-[11px] text-slate-500 mb-4 font-semibold">
+                    <span>TATA IPL 2024</span>
+                    <span class="text-yellow-500">Match 01 | Starts 19:30 IST</span>
+                </div>
+                <div class="flex justify-between items-center text-center gap-2">
+                    <div class="w-2/5">
+                        <img src="https://scores.iplt20.com/ipl-service/tms/download-image?fileId=100&folderName=Teams" class="team-logo-small mx-auto mb-2" alt="Mumbai Indians Logo">
+                        <p class="text-[12px] font-bold text-slate-100">MI</p>
+                    </div>
+                    <div class="w-1/5">
+                        <p class="oswald text-2xl font-bold text-slate-600 italic">VS</p>
+                    </div>
+                    <div class="w-2/5">
+                        <img src="https://scores.iplt20.com/ipl-service/tms/download-image?fileId=101&folderName=Teams" class="team-logo-small mx-auto mb-2" alt="Chennai Super Kings Logo">
+                        <p class="text-[12px] font-bold text-slate-100">CSK</p>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://static.vecteezy.com/system/resources/thumbnails/006/703/094/small/cricket-stadium-with-batsman-playing-cricket-free-vector.jpg" alt="Bonus">
-                    <div class="banner-overlay">
-                        <h2 class="oswald text-xl font-bold text-white">100% WELCOME BONUS</h2>
-                        <p class="text-[10px] text-green-400">First Deposit Special Offer</p>
-                        <button class="mt-2 bg-green-600 text-[10px] w-24 py-1.5 rounded font-bold">RECHARGE</button>
-                    </div>
+                <div class="mt-5 flex gap-3">
+                    <button class="flex-1 bg-black/50 border border-red-500 py-3 rounded-xl text-[12px] font-bold text-red-400 hover:bg-red-500 hover:text-white transition">Back MI (1.92)</button>
+                    <button class="flex-1 bg-black/50 border border-red-500 py-3 rounded-xl text-[12px] font-bold text-red-400 hover:bg-red-500 hover:text-white transition">Back CSK (1.90)</button>
                 </div>
             </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-2 gap-3 px-4 mb-6">
-        <div class="bg-blue-900/20 p-3 rounded-2xl border border-blue-500/20 flex items-center gap-3">
-            <div class="bg-blue-500/20 p-2 rounded-lg text-blue-400"><i class="fas fa-gamepad"></i></div>
-            <div><p class="text-[9px] text-slate-400">Total Bets</p><p class="text-sm font-bold">12</p></div>
-        </div>
-        <div class="bg-green-900/20 p-3 rounded-2xl border border-green-500/20 flex items-center gap-3">
-            <div class="bg-green-500/20 p-2 rounded-lg text-green-400"><i class="fas fa-trophy"></i></div>
-            <div><p class="text-[9px] text-slate-400">Net Profit</p><p class="text-sm font-bold">₹ 1500</p></div>
-        </div>
-    </div>
-
-    <div class="px-4">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="oswald text-sm tracking-widest text-slate-300 uppercase">Live Matches</h3>
-            <span class="text-[10px] text-red-500 animate-pulse font-bold"><i class="fas fa-circle mr-1"></i> LIVE NOW</span>
         </div>
 
-        <div class="match-card p-4 mb-4">
-            <div class="flex justify-between text-[10px] text-slate-500 mb-3 font-bold">
-                <span>TATA IPL 2024</span>
-                <span class="text-yellow-500">Starts in 02:45:00</span>
-            </div>
-            <div class="flex justify-between items-center text-center">
-                <div class="w-1/3">
-                    <img src="https://scores.iplt20.com/ipl-service/tms/download-image?fileId=100&folderName=Teams" class="w-10 h-10 mx-auto mb-1" alt="RCB">
-                    <p class="text-[11px] font-bold">RCB</p>
-                </div>
-                <div class="w-1/3">
-                    <p class="oswald text-lg font-bold text-slate-600 italic">VS</p>
-                </div>
-                <div class="w-1/3">
-                    <img src="https://scores.iplt20.com/ipl-service/tms/download-image?fileId=101&folderName=Teams" class="w-10 h-10 mx-auto mb-1" alt="CSK">
-                    <p class="text-[11px] font-bold">CSK</p>
-                </div>
-            </div>
-            <div class="mt-4 flex gap-2">
-                <button class="flex-1 bg-slate-900/50 border border-slate-700 py-2 rounded-lg text-[10px] font-bold hover:border-red-500">1.85 (RCB)</button>
-                <button class="flex-1 bg-slate-900/50 border border-slate-700 py-2 rounded-lg text-[10px] font-bold hover:border-red-500">2.10 (CSK)</button>
-            </div>
-        </div>
-    </div>
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-link active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="refer.html" class="nav-link">
+                <i class="fas fa-handshake"></i>
+                <span>Refer</span>
+            </a>
+            <a href="wallet.html" class="nav-link">
+                <i class="fas fa-wallet"></i>
+                <span>Wallet</span>
+            </a>
+            <a href="account.html" class="nav-link">
+                <i class="fas fa-user"></i>
+                <span>Account</span>
+            </a>
+        </nav>
 
-    <nav class="bottom-nav">
-        <a href="home.html" class="nav-link active">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="refer.html" class="nav-link">
-            <i class="fas fa-users-crown"></i>
-            <span>Refer</span>
-        </a>
-        <a href="wallet.html" class="nav-link">
-            <i class="fas fa-wallet"></i>
-            <span>Wallet</span>
-        </a>
-        <a href="account.html" class="nav-link">
-            <i class="fas fa-user"></i>
-            <span>Account</span>
-        </a>
-    </nav>
+    </div> <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
+        // --- Firebase Configuration (Same as your register.html) ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyAj4SXI9ultqGO_AquyFbDj9bbUSuSoRqw",
+            authDomain: "ipl2-f8488.firebaseapp.com",
+            projectId: "ipl2-f8488",
+            storageBucket: "ipl2-f8488.firebasestorage.app",
+            messagingSenderId: "466468253752",
+            appId: "1:466468253752:web:12e2cd94b69072506e76cd",
+            measurementId: "G-V85QG85XYG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- Firebase real-time balance system ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Jab user login kare, Firestore se real-time balance fetch karo
+                const userDocRef = doc(db, "users", user.uid);
+                
+                // Real-time listener: Jab Firestore mein balance update hoga, yahan apne aap change dikhega
+                onSnapshot(userDocRef, (doc) => {
+                    if (doc.exists() && doc.data().balance !== undefined) {
+                        const balance = doc.data().balance;
+                        document.getElementById('userBalance').innerText = '₹ ' + parseFloat(balance).toFixed(2);
+                    } else {
+                        // Agar balance field nahi hai Firestore mein
+                        document.getElementById('userBalance').innerText = '₹ 0.00';
+                    }
+                });
+            } else {
+                // Agar user login nahi hai (Humein ise use karna padega redirects ke liye)
+                console.log("User is logged out");
+                window.location.href = "login.html"; // Agar auth nahi hai toh login pe bhejo
+            }
+        });
+
+        // --- Swiper Banner Initialization ---
         var swiper = new Swiper(".mySwiper", {
             loop: true,
             autoplay: {
-                delay: 3000,
+                delay: 3500, // Thoda slow delay for better reading
                 disableOnInteraction: false,
             },
             pagination: {
