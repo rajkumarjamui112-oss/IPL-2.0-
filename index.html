@@ -3,186 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPL 2.0 - India's Biggest Fantasy League</title>
+    <title>IPL 2.0 - Premium Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
         body {
-            background-color: #0f172a;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
-        .hero-gradient {
-            background: linear-gradient(135deg, #0f172a 30%, #b91c1c 100%);
+
+        /* Animated Background shapes for betting feel */
+        .bg-shape {
+            position: absolute;
+            z-index: -1;
+            filter: blur(80px);
+            border-radius: 50%;
         }
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
+
+        .ipl-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            position: relative;
         }
-        .feature-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.08);
+
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            margin: -60px auto 20px;
+            background: #1e293b;
+            border: 4px solid #ef4444;
+            padding: 10px;
+            border-radius: 30px; /* Modern Squircle shape */
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        .step-number {
-            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
-            color: transparent;
-            font-size: 4rem;
+
+        .logo-container img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
         }
+
+        .input-field {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-field:focus {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: #fbbf24; /* Gold border on focus */
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+            transform: translateX(5px);
+        }
+
+        .btn-premium {
+            background: linear-gradient(90deg, #ef4444 0%, #b91c1c 100%);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-premium:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+            transform: scale(1.02);
+        }
+
+        /* Custom Scrollbar for the form if needed */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <nav class="flex justify-between items-center p-6 max-w-7xl mx-auto">
-        <div class="flex items-center space-x-2">
-            <div class="bg-red-600 p-2 rounded-lg shadow-lg shadow-red-500/30">
-                <i class="fas fa-trophy text-xl text-white"></i>
-            </div>
-            <span class="text-2xl font-black tracking-tighter">IPL <span class="text-red-500">2.0</span></span>
-        </div>
-        <div class="space-x-4">
-            <a href="login.html" class="text-sm font-bold hover:text-red-500 transition">LOGIN</a>
-            <a href="register.html" class="bg-red-600 hover:bg-red-700 px-5 py-2 rounded-full text-sm font-bold shadow-lg transition">REGISTER</a>
-        </div>
-    </nav>
+<div class="bg-shape w-64 h-64 bg-red-900/20 top-10 left-10"></div>
+<div class="bg-shape w-96 h-96 bg-blue-900/20 bottom-10 right-10"></div>
 
-    <section class="hero-gradient min-h-[80vh] flex items-center px-6">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center w-full">
-            <div class="space-y-6">
-                <span class="bg-red-600/20 text-red-500 px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase">Official Fantasy Partner</span>
-                <h1 class="text-5xl md:text-7xl font-black leading-tight">CHAMPION BANO, <br><span class="text-red-500">CRORE JEETO!</span></h1>
-                <p class="text-gray-400 text-lg max-w-md">India's most trusted fantasy cricket platform. Create your team, join contests, and win real cash prizes daily.</p>
-                <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <a href="register.html" class="bg-red-600 hover:bg-red-700 text-center text-white px-10 py-4 rounded-xl font-black text-lg shadow-2xl transition transform hover:scale-105">
-                        START PLAYING NOW
-                    </a>
-                    <a href="login.html" class="bg-white/10 hover:bg-white/20 text-center text-white px-10 py-4 rounded-xl font-black text-lg backdrop-blur-md transition">
-                        LOG IN
-                    </a>
-                </div>
-                <div class="flex items-center space-x-6 pt-4 text-sm text-gray-400">
-                    <div><i class="fas fa-check-circle text-green-500 mr-2"></i>100% Safe</div>
-                    <div><i class="fas fa-check-circle text-green-500 mr-2"></i>Instant Withdraw</div>
-                </div>
-            </div>
-            <div class="hidden md:block relative">
-                <img src="https://img.freepik.com/free-photo/cricket-player-action-stadium_1150-14545.jpg" class="rounded-3xl shadow-2xl border-4 border-white/10 rotate-3" alt="Cricket Action">
-                <div class="absolute -bottom-6 -left-6 bg-slate-900 p-6 rounded-2xl border border-white/10 shadow-2xl">
-                    <p class="text-red-500 font-black text-3xl">₹10 CRORE+</p>
-                    <p class="text-xs text-gray-400 uppercase tracking-widest">Daily Winnings</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="ipl-card p-8 pt-12 rounded-[2rem] w-full max-w-md mx-4 mt-12">
+    
+    <div class="logo-container">
+        <img src="logo.png" alt="IPL Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/5358/5358687.png'">
+    </div>
 
-    <section class="py-20 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-black mb-4">WHY PLAY ON <span class="text-red-500">IPL 2.0?</span></h2>
-            <div class="h-1 w-20 bg-red-600 mx-auto"></div>
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-black text-white italic tracking-tighter">
+            CRICKET<span class="text-red-500">BET</span> 2.0
+        </h1>
+        <div class="flex justify-center items-center gap-2 mt-1">
+            <span class="h-[1px] w-8 bg-yellow-500"></span>
+            <p class="text-yellow-500 text-[10px] uppercase font-bold tracking-[0.3em]">Official Partner</p>
+            <span class="h-[1px] w-8 bg-yellow-500"></span>
+        </div>
+    </div>
+
+    <form id="signupForm" class="space-y-4">
+        <div class="relative group">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                <i class="fas fa-user-ninja"></i>
+            </span>
+            <input type="email" id="email" required 
+                class="input-field block w-full pl-12 pr-4 py-4 rounded-2xl text-sm" 
+                placeholder="Username or Email">
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="feature-card p-8 rounded-3xl">
-                <i class="fas fa-bolt text-4xl text-yellow-500 mb-6"></i>
-                <h3 class="text-xl font-bold mb-3">Fastest Updates</h3>
-                <p class="text-gray-400 text-sm">Real-time point updates aur live leaderboard rankings har ball ke saath.</p>
-            </div>
-            <div class="feature-card p-8 rounded-3xl">
-                <i class="fas fa-shield-halved text-4xl text-blue-500 mb-6"></i>
-                <h3 class="text-xl font-bold mb-3">Secure Payments</h3>
-                <p class="text-gray-400 text-sm">UPI, Net Banking aur Wallets ke zariye safe aur instant withdrawals.</p>
-            </div>
-            <div class="feature-card p-8 rounded-3xl">
-                <i class="fas fa-users text-4xl text-red-500 mb-6"></i>
-                <h3 class="text-xl font-bold mb-3">Big Leagues</h3>
-                <p class="text-gray-400 text-sm">Mega contests mein part lein aur lakhon users ke saath compete karein.</p>
-            </div>
+        <div class="relative group">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                <i class="fas fa-lock"></i>
+            </span>
+            <input type="password" id="password" required 
+                class="input-field block w-full pl-12 pr-4 py-4 rounded-2xl text-sm" 
+                placeholder="Create Strong Password">
         </div>
-    </section>
 
-    <section class="bg-slate-900/50 py-20 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-black mb-4">HOW TO <span class="text-red-500">PLAY?</span></h2>
-                <p class="text-gray-400">Winning on IPL 2.0 is as easy as 1-2-3</p>
-            </div>
+        <div class="relative group">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                <i class="fas fa-check-double"></i>
+            </span>
+            <input type="password" id="confirmPassword" required 
+                class="input-field block w-full pl-12 pr-4 py-4 rounded-2xl text-sm" 
+                placeholder="Confirm Password">
+        </div>
 
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="relative text-center">
-                    <span class="step-number absolute -top-10 left-1/2 -translate-x-1/2 font-black">01</span>
-                    <div class="relative z-10 pt-10">
-                        <h4 class="text-2xl font-bold mb-4">Select Match</h4>
-                        <p class="text-gray-400 text-sm">Upcoming matches mein se koi bhi match select karein.</p>
-                    </div>
-                </div>
-                <div class="relative text-center">
-                    <span class="step-number absolute -top-10 left-1/2 -translate-x-1/2 font-black">02</span>
-                    <div class="relative z-10 pt-10">
-                        <h4 class="text-2xl font-bold mb-4">Create Team</h4>
-                        <p class="text-gray-400 text-sm">100 credits use karke apne 11 best players chunein.</p>
-                    </div>
-                </div>
-                <div class="relative text-center">
-                    <span class="step-number absolute -top-10 left-1/2 -translate-x-1/2 font-black">03</span>
-                    <div class="relative z-10 pt-10">
-                        <h4 class="text-2xl font-bold mb-4">Join Contest</h4>
-                        <p class="text-gray-400 text-sm">Contest join karein aur real cash prize jeetein.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="relative group">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                <i class="fas fa-gift"></i>
+            </span>
+            <input type="text" id="referral" 
+                class="input-field block w-full pl-12 pr-4 py-4 rounded-2xl text-sm border-dashed" 
+                placeholder="Referral Code (If any)">
         </div>
-    </section>
 
-    <section class="py-20 px-6 max-w-5xl mx-auto">
-        <div class="bg-white/5 p-8 md:p-12 rounded-[2rem] border border-white/10">
-            <h3 class="text-2xl font-bold mb-8 flex items-center">
-                <i class="fas fa-gavel text-red-500 mr-4"></i> Rules & Fair Play
-            </h3>
-            <ul class="space-y-4 text-gray-300 text-sm leading-relaxed">
-                <li class="flex items-start">
-                    <i class="fas fa-arrow-right text-red-500 mt-1 mr-3"></i>
-                    Aapki age 18 saal se zyada honi chahiye tabhi aap cash contest khel sakte hain.
-                </li>
-                <li class="flex items-start">
-                    <i class="fas fa-arrow-right text-red-500 mt-1 mr-3"></i>
-                    Assam, Odisha, Telangana, Nagaland, Andhra Pradesh ke users cash contest nahi khel sakte.
-                </li>
-                <li class="flex items-start">
-                    <i class="fas fa-arrow-right text-red-500 mt-1 mr-3"></i>
-                    Ek user sirf ek hi account bana sakta hai. Multiple accounts banaye toh ban kar diya jayega.
-                </li>
-                <li class="flex items-start">
-                    <i class="fas fa-arrow-right text-red-500 mt-1 mr-3"></i>
-                    Withdrawal ke liye PAN card aur Bank details (KYC) mandatory hain.
-                </li>
-            </ul>
+        <div class="flex items-center space-x-3 py-2">
+            <input type="checkbox" id="terms" required 
+                class="w-5 h-5 rounded border-gray-700 bg-slate-800 text-red-600 focus:ring-offset-slate-900">
+            <label for="terms" class="text-[11px] text-gray-400 leading-tight">
+                I confirm that I am 18+ and I agree to the <a href="#" class="text-red-400 hover:text-white underline">Privacy Policy</a>.
+            </label>
         </div>
-    </section>
 
-    <footer class="bg-black py-12 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-b border-white/10 pb-10">
-            <div class="text-center md:text-left">
-                <div class="flex items-center justify-center md:justify-start space-x-2 mb-4">
-                    <div class="bg-red-600 p-1.5 rounded text-xs">
-                        <i class="fas fa-trophy text-white"></i>
-                    </div>
-                    <span class="text-xl font-bold">IPL 2.0</span>
-                </div>
-                <p class="text-gray-500 text-xs max-w-sm">
-                    IPL 2.0 is a skill-based platform. Please play responsibly. Fantasy sports involve financial risk.
-                </p>
-            </div>
-            <div class="flex gap-6">
-                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-telegram text-2xl"></i></a>
-            </div>
-        </div>
-        <div class="text-center mt-8 text-gray-600 text-xs">
-            © 2026 IPL 2.0 Fantasy Sports. All Rights Reserved.
-        </div>
-    </footer>
+        <button type="submit" 
+            class="btn-premium w-full text-white font-extrabold py-4 rounded-2xl mt-2 flex items-center justify-center gap-3">
+            <span>Join the Arena</span>
+            <i class="fas fa-arrow-right text-xs"></i>
+        </button>
+    </form>
+
+    <div class="mt-8 text-center">
+        <p class="text-gray-500 text-xs">Already have an account?</p>
+        <a href="login.html" 
+            class="mt-1 inline-block text-white text-sm font-semibold hover:text-yellow-500 transition-all underline underline-offset-4 decoration-red-500">
+            Login Now
+        </a>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAj4SXI9ultqGO_AquyFbDj9bbUSuSoRqw",
+        authDomain: "ipl2-f8488.firebaseapp.com",
+        projectId: "ipl2-f8488",
+        storageBucket: "ipl2-f8488.firebasestorage.app",
+        messagingSenderId: "466468253752",
+        appId: "1:466468253752:web:12e2cd94b69072506e76cd",
+        measurementId: "G-V85QG85XYG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const referral = document.getElementById('referral').value;
+
+        if (password !== confirmPassword) {
+            alert("⚠️ Passwords don't match!");
+            return;
+        }
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            await setDoc(doc(db, "users", user.uid), {
+                email: email,
+                referral: referral,
+                role: "player",
+                joinedAt: new Date().toISOString()
+            });
+
+            alert("✅ Welcome to the Arena! Registration successful.");
+            window.location.href = "login.html";
+
+        } catch (error) {
+            console.error(error);
+            alert("❌ Error: " + error.message);
+        }
+    });
+</script>
 
 </body>
 </html>
