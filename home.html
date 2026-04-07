@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL 2.0 - Home Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            background-color: #0f172a;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+
+        .oswald { font-family: 'Oswald', sans-serif; }
+
+        /* Header Styling */
+        header {
+            background: #1e293b;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #ef4444;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .logo-round {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #ef4444;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .logo-round img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Betting Card */
+        .match-card {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .live-badge {
+            background: #ef4444;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-size: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .nav-link {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 11px;
+            transition: 0.3s;
+            flex: 1;
+        }
+
+        .nav-link i {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .nav-link.active, .nav-link:hover {
+            color: #ef4444;
+        }
+
+        .action-btn {
+            background: #22c55e;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="flex items-center gap-3">
+            <div class="logo-round">
+                <img src="logo.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3504/3504113.png'">
+            </div>
+            <h1 class="oswald text-xl font-bold tracking-tight">IPL <span class="text-red-500">2.0</span></h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="text-right">
+                <p class="text-[10px] text-slate-400 uppercase">Balance</p>
+                <p class="text-green-500 font-bold">₹ 0.00</p>
+            </div>
+            <i class="fas fa-bell text-slate-400"></i>
+        </div>
+    </header>
+
+    <main class="p-4">
+        <div class="bg-gradient-to-r from-red-600 to-orange-500 p-6 rounded-3xl mb-6 shadow-lg">
+            <h2 class="oswald text-2xl font-bold">WELCOME TO THE ARENA!</h2>
+            <p class="text-sm opacity-90">Place your first bet & win big today.</p>
+        </div>
+
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="oswald text-lg uppercase tracking-wide">Live Matches</h3>
+            <span class="text-xs text-red-500 font-bold italic">View All</span>
+        </div>
+
+        <div class="match-card p-5">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-[10px] text-slate-400">T20 World Cup</span>
+                <span class="live-badge font-bold">LIVE</span>
+            </div>
+            <div class="flex justify-around items-center text-center">
+                <div>
+                    <div class="w-12 h-12 bg-slate-800 rounded-full mx-auto mb-2 flex items-center justify-center font-bold">IND</div>
+                    <p class="text-xs font-bold">INDIA</p>
+                </div>
+                <div class="oswald text-2xl font-bold text-red-500">VS</div>
+                <div>
+                    <div class="w-12 h-12 bg-slate-800 rounded-full mx-auto mb-2 flex items-center justify-center font-bold">PAK</div>
+                    <p class="text-xs font-bold">PAKISTAN</p>
+                </div>
+            </div>
+            <div class="mt-6 flex gap-3">
+                <button class="flex-1 bg-slate-800 py-2 rounded-xl text-xs font-bold border border-slate-700 hover:border-red-500 transition">BID IND</button>
+                <button class="flex-1 bg-slate-800 py-2 rounded-xl text-xs font-bold border border-slate-700 hover:border-red-500 transition">BID PAK</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-slate-800/50 p-4 rounded-2xl border border-white/5">
+                <i class="fas fa-chart-line text-blue-400 mb-2"></i>
+                <p class="text-[10px] text-slate-400">Total Bets</p>
+                <p class="font-bold">0</p>
+            </div>
+            <div class="bg-slate-800/50 p-4 rounded-2xl border border-white/5">
+                <i class="fas fa-trophy text-yellow-500 mb-2"></i>
+                <p class="text-[10px] text-slate-400">Total Wins</p>
+                <p class="font-bold">₹ 0</p>
+            </div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="home.html" class="nav-link active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="refer.html" class="nav-link">
+            <i class="fas fa-users"></i>
+            <span>Refer</span>
+        </a>
+
+        <a href="wallet.html" class="nav-link">
+            <i class="fas fa-wallet"></i>
+            <span>Wallet</span>
+        </a>
+
+        <a href="account.html" class="nav-link">
+            <i class="fas fa-user-circle"></i>
+            <span>Account</span>
+        </a>
+    </nav>
+
+</body>
+</html>
