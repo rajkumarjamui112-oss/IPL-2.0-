@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL 2.0 - My Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600&display=swap');
+        body { background-color: #050810; color: white; font-family: 'Poppins', sans-serif; margin: 0; display: flex; justify-content: center; }
+        .bebas { font-family: 'Bebas Neue', sans-serif; }
+        .mobile-view { width: 100%; max-width: 480px; background: #0a1122; min-height: 100vh; position: relative; padding-bottom: 80px; }
+        
+        /* Avatar Glow Effect */
+        .avatar-container {
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 3px solid #ef4444; padding: 3px;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            margin: 20px auto; overflow: hidden;
+        }
+        .avatar-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+        /* Glassmorphism Card */
+        .info-card {
+            background: linear-gradient(145deg, #161d2f, #0a1122);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px; padding: 20px; margin: 15px;
+        }
+
+        /* Horizontal Menu */
+        .horizontal-line {
+            display: flex; justify-content: space-around;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0; margin: 20px 0;
+        }
+        .menu-item { text-align: center; cursor: pointer; transition: 0.3s; }
+        .menu-item:active { transform: scale(0.9); }
+        .menu-item i { font-size: 20px; margin-bottom: 5px; color: #ef4444; }
+        .menu-item p { font-size: 10px; font-weight: bold; text-transform: uppercase; }
+
+        /* Vertical Help Button */
+        .vertical-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 15px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: space-between;
+            margin: 10px 15px; transition: 0.3s;
+        }
+        .vertical-btn:active { background: rgba(239, 68, 68, 0.1); }
+
+        .btn-logout {
+            margin: 30px 15px; background: #1e293b; color: #ef4444;
+            padding: 15px; border-radius: 12px; text-align: center;
+            font-weight: bold; border: 1px solid rgba(239,68,68,0.2);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="mobile-view">
+    <div class="p-6 text-center">
+        <div class="avatar-container">
+            <img src="https://wallpapers.com/images/hd/virat-kohli-animated-cool-profile-picture-3u80x0r0336pms3t.jpg" alt="Player">
+        </div>
+        <h2 class="bebas text-3xl tracking-wider">CRICKET <span class="text-red-500">PRO</span></h2>
+        
+        <div class="flex items-center justify-center gap-2 mt-2 bg-black/30 w-fit mx-auto px-4 py-1 rounded-full border border-white/5">
+            <p class="text-[10px] text-slate-400 font-mono" id="userIdText">ID: LOADING...</p>
+            <button onclick="copyId()" class="text-red-500 text-[10px]"><i class="fas fa-copy"></i></button>
+        </div>
+    </div>
+
+    <div class="info-card text-center">
+        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[3px]">Total Balance</p>
+        <h1 class="text-4xl font-bold mt-1 text-green-500" id="userBalance">₹ 0.00</h1>
+        <div class="flex justify-center gap-2 mt-3">
+            <span class="bg-green-500/10 text-green-500 text-[8px] px-2 py-1 rounded font-bold uppercase">Verified Account</span>
+        </div>
+    </div>
+
+    <div class="horizontal-line">
+        <div class="menu-item" onclick="location.href='deposit.html'">
+            <i class="fas fa-wallet"></i>
+            <p>Deposit</p>
+        </div>
+        <div class="menu-item" onclick="location.href='withdraw.html'">
+            <i class="fas fa-hand-holding-usd"></i>
+            <p>Withdraw</p>
+        </div>
+        <div class="menu-item" onclick="location.href='history.html'">
+            <i class="fas fa-list-ul"></i>
+            <p>History</p>
+        </div>
+    </div>
+
+    <p class="px-5 text-[10px] text-slate-500 font-bold uppercase mb-2">Support & Info</p>
+    
+    <div class="vertical-btn" onclick="location.href='help.html'">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                <i class="fas fa-headset text-blue-500"></i>
+            </div>
+            <div>
+                <p class="text-sm font-bold">Help Center</p>
+                <p class="text-[9px] text-slate-500">Contact support 24/7</p>
+            </div>
+        </div>
+        <i class="fas fa-chevron-right text-slate-600 text-xs"></i>
+    </div>
+
+    <div class="vertical-btn" onclick="location.href='rules.html'">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-yellow-500/10 rounded-lg flex items-center justify-center">
+                <i class="fas fa-file-alt text-yellow-500"></i>
+            </div>
+            <div>
+                <p class="text-sm font-bold">Game Rules</p>
+                <p class="text-[9px] text-slate-500">Terms and conditions</p>
+            </div>
+        </div>
+        <i class="fas fa-chevron-right text-slate-600 text-xs"></i>
+    </div>
+
+    <div class="btn-logout" id="logoutBtn">
+        <i class="fas fa-sign-out-alt mr-2"></i> LOGOUT ACCOUNT
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAj4SXI9ultqGO_AquyFbDj9bbUSuSoRqw",
+        authDomain: "ipl2-f8488.firebaseapp.com",
+        projectId: "ipl2-f8488",
+        storageBucket: "ipl2-f8488.firebasestorage.app",
+        messagingSenderId: "466468253752",
+        appId: "1:466468253752:web:12e2cd94b69072506e76cd"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            document.getElementById('userIdText').innerText = "ID: " + user.uid.substring(0, 10).toUpperCase();
+            
+            // Real-time Balance Update
+            onSnapshot(doc(db, "users", user.uid), (doc) => {
+                if (doc.exists()) {
+                    document.getElementById('userBalance').innerText = '₹ ' + (doc.data().balance || 0).toFixed(2);
+                }
+            });
+        } else {
+            window.location.href = "login.html";
+        }
+    });
+
+    // Copy ID Function
+    window.copyId = () => {
+        const idText = document.getElementById('userIdText').innerText.replace("ID: ", "");
+        navigator.clipboard.writeText(idText);
+        alert("User ID Copied: " + idText);
+    };
+
+    // Logout Function
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        if(confirm("Are you sure you want to logout?")) {
+            signOut(auth).then(() => {
+                window.location.href = "login.html";
+            });
+        }
+    });
+</script>
+</body>
+</html>
