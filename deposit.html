@@ -25,7 +25,6 @@
         .gateway-card.active { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
         .gateway-card img { width: 30px; height: 30px; object-fit: contain; }
 
-        /* Package Styles - Grid adjusted for 5 items */
         .pkg-card {
             background: #161d2f; border: 1px solid rgba(255,255,255,0.05);
             padding: 8px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s;
@@ -37,12 +36,46 @@
             margin: 15px auto; display: flex; align-items: center; justify-content: center;
         }
 
+        /* HIGH-LIGHTED UTR BOX */
+        .utr-highlight-box {
+            background: rgba(239, 68, 68, 0.05);
+            border: 2px solid #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0% { border-color: #ef4444; box-shadow: 0 0 5px rgba(239, 68, 68, 0.2); }
+            50% { border-color: #ff0000; box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
+            100% { border-color: #ef4444; box-shadow: 0 0 5px rgba(239, 68, 68, 0.2); }
+        }
+
         .history-item {
-            background: rgba(22, 29, 47, 0.5); border-radius: 12px; padding: 12px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.03);
+            background: rgba(22, 29, 47, 0.5); border-radius: 12px; padding: 12px; margin-bottom: 10px; border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* POPUP MODAL STYLE */
+        #paymentPopup {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+            z-index: 1000; align-items: center; justify-content: center; padding: 20px;
         }
     </style>
 </head>
 <body>
+
+<div id="paymentPopup">
+    <div class="bg-[#161d2f] p-6 rounded-3xl border border-red-500 w-full max-width-[350px] text-center shadow-2xl">
+        <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+        </div>
+        <h2 class="bebas text-2xl mb-2 tracking-wide">IMPORTANT STEP</h2>
+        <p class="text-[11px] text-slate-300 mb-6 leading-relaxed">Payment complete hone ke baad <span class="text-white font-bold text-red-400">12-Digit UTR Number</span> niche diye gaye box mein zaroor submit karein, varna balance add nahi hoga.</p>
+        <button onclick="closePopup()" class="w-full bg-red-600 py-3 rounded-xl font-bold text-xs uppercase tracking-widest">I Understand</button>
+    </div>
+</div>
 
 <div class="mobile-view">
     <header>
@@ -86,15 +119,18 @@
                 <button onclick="copyUpi()" class="text-red-500 text-[10px] font-bold">COPY ID</button>
             </div>
 
-            <button onclick="payNowIntent()" class="w-full bg-red-600 py-4 rounded-xl font-bold text-sm shadow-lg shadow-red-900/30">
+            <button onclick="payNowIntent()" class="w-full bg-red-600 py-4 rounded-xl font-bold text-sm shadow-lg shadow-red-900/30 transition active:scale-95">
                 <i class="fas fa-bolt mr-2"></i> PAY NOW VIA APP
             </button>
         </div>
 
-        <div class="bg-black/20 p-4 rounded-2xl border border-white/5 mb-8">
-            <p class="text-[10px] text-slate-500 font-bold uppercase mb-2 text-center">Step 3: Paste UTR Number</p>
-            <input type="number" id="utrInput" class="w-full bg-[#050810] border border-slate-800 p-4 rounded-xl text-white outline-none text-center tracking-widest" placeholder="12 Digit Ref Number">
-            <button onclick="submitDeposit()" class="w-full bg-slate-800 py-3 rounded-xl mt-3 font-bold text-xs border border-white/10">SUBMIT TRANSACTION</button>
+        <div class="utr-highlight-box">
+            <div class="flex items-center gap-2 mb-3">
+                <div class="w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
+                <p class="text-[10px] text-red-500 font-bold uppercase tracking-widest">Step 3: Paste UTR Number Here</p>
+            </div>
+            <input type="number" id="utrInput" class="w-full bg-[#050810] border-2 border-slate-700 p-4 rounded-xl text-white outline-none text-center tracking-[0.2em] text-lg font-bold placeholder:text-slate-700" placeholder="123456789012">
+            <button onclick="submitDeposit()" class="w-full bg-white text-black py-4 rounded-xl mt-4 font-bold text-xs uppercase tracking-tighter shadow-lg">SUBMIT TRANSACTION</button>
         </div>
 
         <div class="mt-4">
@@ -102,7 +138,6 @@
                 <h3 class="bebas text-xl tracking-wider">DEPOSIT <span class="text-red-500">HISTORY</span></h3>
                 <i class="fas fa-sync-alt text-xs text-slate-500"></i>
             </div>
-            
             <div id="historyList">
                 <p class="text-center text-[10px] text-slate-600 py-4">Loading history...</p>
             </div>
@@ -132,6 +167,15 @@
     let selectedMethod = "UPI";
     const upi = "investpro4449@axl";
     let currentUser = null;
+
+    // Show Popup on Load
+    window.onload = () => {
+        document.getElementById('paymentPopup').style.display = 'flex';
+    };
+
+    window.closePopup = () => {
+        document.getElementById('paymentPopup').style.display = 'none';
+    };
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -163,7 +207,6 @@
                         </div>
                         <div class="text-right">
                             <p class="text-[9px] font-bold ${color}">${data.status.toUpperCase()}</p>
-                            <p class="text-[8px] text-slate-600 italic">ID: ${doc.id.substring(0,6)}</p>
                         </div>
                     </div>`;
             });
@@ -201,7 +244,7 @@
 
     window.submitDeposit = async () => {
         const utr = document.getElementById('utrInput').value;
-        if(utr.length < 10) return alert("Enter valid UTR!");
+        if(utr.length < 12) return alert("Please enter valid 12-digit UTR!");
         
         try {
             await addDoc(collection(db, "deposits"), {
@@ -212,7 +255,7 @@
                 status: "Pending",
                 timestamp: serverTimestamp()
             });
-            alert("Payment Submitted Successfully!");
+            alert("UTR Submitted! Balance will be added after verification.");
             document.getElementById('utrInput').value = "";
         } catch (e) { alert(e.message); }
     };
