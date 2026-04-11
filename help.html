@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL 2.0 - Support Arena</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.92)), 
+                        url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=2067');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .oswald { font-family: 'Oswald', sans-serif; }
+
+        .ipl-card {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            border-top: 4px solid #ef4444;
+            border-bottom: 4px solid #22c55e;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            width: 100%;
+            max-width: 450px;
+            border-radius: 24px;
+        }
+
+        .input-field {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #475569;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+        }
+
+        /* Sporty Button Style */
+        .btn-action {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-telegram {
+            background: linear-gradient(135deg, #0088cc 0%, #005580 100%);
+        }
+
+        .btn-ticket {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+        }
+
+        .btn-action:hover {
+            filter: brightness(1.2);
+            transform: scale(1.02);
+        }
+
+        .support-icon {
+            background: #1e293b;
+            border: 3px solid #ef4444;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: -60px auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<div class="ipl-card p-8">
+    <div class="support-icon">
+        <i class="fas fa-headset text-red-500"></i>
+    </div>
+
+    <div class="text-center mb-8">
+        <h1 class="oswald text-3xl font-bold text-white tracking-tight italic">
+            SUPPORT <span class="text-red-500 underline decoration-green-500">CENTER</span>
+        </h1>
+        <p class="text-slate-400 text-xs uppercase tracking-widest mt-1">24/7 Player Assistance</p>
+    </div>
+
+    <div class="mb-8">
+        <p class="text-slate-300 text-sm mb-4 text-center">Fastest way to get help? Chat with us live.</p>
+        <a href="https://t.me/YOUR_USERNAME" target="_blank" class="btn-action btn-telegram w-full text-white font-bold py-4 rounded-lg flex items-center justify-center gap-3 text-lg shadow-lg">
+            <i class="fab fa-telegram-plane text-2xl"></i> Chat on Telegram
+        </a>
+    </div>
+
+    <div class="relative flex py-5 items-center">
+        <div class="flex-grow border-t border-slate-700"></div>
+        <span class="flex-shrink mx-4 text-slate-500 text-xs font-bold uppercase">OR RAISE A TICKET</span>
+        <div class="flex-grow border-t border-slate-700"></div>
+    </div>
+
+    <form id="ticketForm" class="space-y-4">
+        <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-500">
+                <i class="fas fa-user-tag text-xs"></i>
+            </span>
+            <input type="text" id="subject" required 
+                class="input-field block w-full pl-11 pr-4 py-3 rounded-xl text-sm" 
+                placeholder="Issue Subject (e.g. Deposit, Login)">
+        </div>
+
+        <div class="relative">
+            <textarea id="message" rows="3" required
+                class="input-field block w-full p-4 rounded-xl text-sm focus:outline-none" 
+                placeholder="Describe your problem here..."></textarea>
+        </div>
+
+        <button type="submit" 
+            class="btn-action btn-ticket w-full text-white font-bold py-4 rounded-lg mt-2 text-lg shadow-lg">
+            Submit Ticket <i class="fas fa-paper-plane ml-2 text-yellow-400 text-sm"></i>
+        </button>
+    </form>
+
+    <div class="mt-6 text-center">
+        <a href="dashboard.html" class="text-slate-400 text-xs hover:text-white transition-all">
+            <i class="fas fa-arrow-left mr-1"></i> Back to Arena
+        </a>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // Same config as your register page
+    const firebaseConfig = {
+        apiKey: "AIzaSyAj4SXI9ultqGO_AquyFbDj9bbUSuSoRqw",
+        authDomain: "ipl2-f8488.firebaseapp.com",
+        projectId: "ipl2-f8488",
+        storageBucket: "ipl2-f8488.firebasestorage.app",
+        messagingSenderId: "466468253752",
+        appId: "1:466468253752:web:12e2cd94b69072506e76cd"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        const user = auth.currentUser;
+
+        try {
+            await addDoc(collection(db, "tickets"), {
+                userId: user ? user.uid : "anonymous",
+                email: user ? user.email : "guest",
+                subject: subject,
+                message: message,
+                status: "open",
+                createdAt: new Date().toISOString()
+            });
+            alert("🚀 Ticket Raised! Our team will contact you soon.");
+            e.target.reset();
+        } catch (error) {
+            alert("❌ Failed to send: " + error.message);
+        }
+    });
+</script>
+
+</body>
+</html>
