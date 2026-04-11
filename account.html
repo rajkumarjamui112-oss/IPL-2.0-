@@ -10,419 +10,188 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
 
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+        background: linear-gradient(rgba(15,23,42,0.92), rgba(15,23,42,0.92)),
+                    url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=2067');
+        background-size:cover; background-position:center; background-attachment:fixed;
+        min-height:100vh; display:flex; justify-content:center;
+        font-family:'Poppins',sans-serif; color:#fff;
     }
 
-    body{
-        background:
-            linear-gradient(rgba(15,23,42,0.92), rgba(15,23,42,0.92)),
-            url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=2067');
-        background-size:cover;
-        background-position:center;
-        background-attachment:fixed;
-        min-height:100vh;
-        display:flex;
-        justify-content:center;
-        font-family:'Poppins',sans-serif;
-        color:#fff;
+    .mobile-view {
+        width:100%; max-width:480px; min-height:100vh;
+        background:rgba(10,17,34,0.92); backdrop-filter:blur(10px);
+        position:relative; padding-bottom:90px; overflow-x:hidden;
     }
 
-    .mobile-view{
-        width:100%;
-        max-width:480px;
-        min-height:100vh;
-        background:rgba(10,17,34,0.92);
-        backdrop-filter:blur(10px);
-        position:relative;
-        padding-bottom:90px;
-        overflow:hidden;
-    }
-
-    .top-card{
+    .top-card {
         background:linear-gradient(135deg,#ef4444 0%, #b91c1c 100%);
-        border-bottom-left-radius:35px;
-        border-bottom-right-radius:35px;
-        padding:25px 20px 55px;
-        position:relative;
+        border-bottom-left-radius:35px; border-bottom-right-radius:35px;
+        padding:25px 20px 55px; position:relative;
         box-shadow:0 15px 30px rgba(239,68,68,0.2);
     }
 
-    .profile-wrap{
-        display:flex;
-        align-items:center;
-        gap:16px;
+    .profile-wrap { display:flex; align-items:center; gap:16px; }
+
+    .avatar {
+        width:78px; height:78px; border-radius:50%; background:#1e293b;
+        border:4px solid rgba(255,255,255,0.9); overflow:hidden; flex-shrink:0;
     }
 
-    .avatar{
-        width:78px;
-        height:78px;
-        border-radius:50%;
-        background:#1e293b;
-        border:4px solid rgba(255,255,255,0.9);
-        overflow:hidden;
-        box-shadow:0 0 20px rgba(255,255,255,0.15);
-        flex-shrink:0;
+    .avatar img { width:100%; height:100%; object-fit:cover; }
+
+    .member-title { font-family:'Oswald',sans-serif; font-size:36px; color:white; }
+
+    .uid-box {
+        margin-top:8px; background:rgba(255,255,255,0.15); border-radius:999px;
+        padding:8px 14px; display:flex; align-items:center; gap:10px;
+        width:fit-content; font-size:12px; font-weight:600;
     }
 
-    .avatar img{
-        width:100%;
-        height:100%;
-        object-fit:cover;
+    .balance-card {
+        margin:-30px 18px 22px; background:rgba(30,41,59,0.96);
+        border-top:4px solid #ef4444; border-bottom:4px solid #22c55e;
+        border-radius:24px; padding:22px; display:flex;
+        justify-content:space-between; align-items:center; z-index:2; position:relative;
     }
 
-    .member-title{
-        font-family:'Oswald',sans-serif;
-        font-size:36px;
-        color:white;
-        letter-spacing:1px;
-    }
+    .balance-card h1 { font-size:32px; color:#22c55e; font-weight:700; }
 
-    .uid-box{
-        margin-top:8px;
-        background:rgba(255,255,255,0.15);
-        border:1px solid rgba(255,255,255,0.15);
-        border-radius:999px;
-        padding:8px 14px;
-        display:flex;
-        align-items:center;
-        gap:10px;
-        width:fit-content;
-        font-size:12px;
-        font-weight:600;
-    }
-
-    .uid-box button{
-        background:none;
-        border:none;
-        color:#fff;
-        cursor:pointer;
-    }
-
-    .balance-card{
-        margin:-30px 18px 22px;
-        background:rgba(30,41,59,0.96);
-        border-top:4px solid #ef4444;
-        border-bottom:4px solid #22c55e;
-        border-radius:24px;
-        padding:22px;
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        box-shadow:0 20px 30px rgba(0,0,0,0.4);
-        position:relative;
-        z-index:2;
-        flex-wrap:wrap;
-        gap:15px;
-    }
-
-    .balance-card p{
-        font-size:12px;
-        color:#94a3b8;
-        font-weight:700;
-        letter-spacing:1px;
-    }
-
-    .balance-card h1{
-        font-size:clamp(36px,7vw,52px);
-        color:#22c55e;
-        font-weight:700;
-        margin-top:4px;
-        line-height:1;
-        word-break:break-word;
-    }
-
-    .wallet-btn{
+    .wallet-btn {
         background:linear-gradient(135deg,#ef4444 0%, #b91c1c 100%);
-        padding:12px 18px;
-        border-radius:14px;
-        color:#fff;
-        font-weight:700;
-        border:none;
-        cursor:pointer;
-        white-space:nowrap;
+        padding:10px 18px; border-radius:12px; font-weight:700; font-size: 14px;
     }
 
-    .menu-btn{
-        margin:14px 18px;
-        background:rgba(255,255,255,0.04);
-        border:1px solid rgba(255,255,255,0.06);
-        border-radius:18px;
-        padding:18px;
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        cursor:pointer;
-        transition:0.3s;
+    .menu-btn {
+        margin:12px 18px; background:rgba(255,255,255,0.04);
+        border:1px solid rgba(255,255,255,0.06); border-radius:18px;
+        padding:18px; display:flex; justify-content:space-between; align-items:center;
     }
 
-    .menu-btn:hover{
-        background:rgba(239,68,68,0.06);
+    .logout-btn {
+        margin:20px 18px; padding:16px; border-radius:18px;
+        border:1px solid rgba(239,68,68,0.5); color:#ef4444;
+        text-align:center; font-weight:700; cursor:pointer;
     }
 
-    .menu-left{
-        display:flex;
-        align-items:center;
-        gap:15px;
+    /* Modal Overlay */
+    #passwordModal {
+        display: none; position: fixed; inset: 0; 
+        background: rgba(0,0,0,0.85); z-index: 50;
+        align-items: center; justify-content: center; padding: 20px;
     }
 
-    .menu-left i{
-        color:#facc15;
-        font-size:20px;
-        width:20px;
+    .modal-content {
+        background: #1e293b; width: 100%; max-width: 380px;
+        border-radius: 24px; border-top: 4px solid #ef4444; padding: 25px;
     }
 
-    .menu-left span{
-        font-size:16px;
-        font-weight:600;
+    .input-field {
+        background: #0f172a; border: 1px solid #334155;
+        color: white; width: 100%; padding: 12px 15px; border-radius: 12px; margin-top: 10px;
     }
 
-    .logout-btn{
-        margin:20px 18px;
-        padding:18px;
-        border-radius:18px;
-        border:1px solid rgba(239,68,68,0.7);
-        background:rgba(239,68,68,0.04);
-        color:#ef4444;
-        text-align:center;
-        font-weight:700;
-        cursor:pointer;
-        transition:0.3s;
+    .bottom-nav {
+        position:fixed; bottom:0; width:100%; max-width:480px;
+        background:rgba(30,41,59,0.95); display:flex;
+        justify-content:space-around; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1);
     }
 
-    .logout-btn:hover{
-        background:rgba(239,68,68,0.1);
-    }
-
-    .features{
-        display:flex;
-        justify-content:space-around;
-        margin:30px 15px 20px;
-        text-align:center;
-        gap:10px;
-    }
-
-    .feature-box{
-        flex:1;
-    }
-
-    .feature-box i{
-        color:#facc15;
-        font-size:26px;
-        margin-bottom:8px;
-    }
-
-    .feature-box p{
-        font-size:11px;
-        color:#94a3b8;
-    }
-
-    .footer-brand{
-        border-top:1px solid rgba(255,255,255,0.05);
-        margin-top:20px;
-        padding:25px 22px;
-        text-align:center;
-    }
-
-    .footer-brand h3{
-        font-family:'Oswald',sans-serif;
-        color:#ef4444;
-        font-size:32px;
-        letter-spacing:1px;
-    }
-
-    .footer-brand span{
-        color:#22c55e;
-    }
-
-    .footer-brand p{
-        margin-top:10px;
-        font-size:13px;
-        color:#94a3b8;
-        line-height:1.7;
-    }
-
-    .bottom-nav{
-        position:fixed;
-        bottom:0;
-        width:100%;
-        max-width:480px;
-        background:rgba(30,41,59,0.95);
-        border-top:1px solid rgba(255,255,255,0.06);
-        display:flex;
-        justify-content:space-around;
-        padding:12px 0;
-        backdrop-filter:blur(8px);
-    }
-
-    .nav-item{
-        text-align:center;
-        font-size:12px;
-        color:#94a3b8;
-        cursor:pointer;
-    }
-
-    .nav-item i{
-        display:block;
-        font-size:22px;
-        margin-bottom:4px;
-    }
-
-    .nav-item.active{
-        color:#ef4444;
-    }
-
-    @media(max-width:480px){
-        .member-title{
-            font-size:28px;
-        }
-
-        .balance-card{
-            flex-direction:column;
-            align-items:flex-start;
-        }
-
-        .wallet-btn{
-            width:100%;
-        }
-
-        .menu-left span{
-            font-size:15px;
-        }
-    }
+    .nav-item { text-align:center; font-size:12px; color:#94a3b8; }
+    .nav-item.active { color:#ef4444; }
+    .nav-item i { display:block; font-size:20px; margin-bottom:4px; }
 </style>
 </head>
 <body>
 
 <div class="mobile-view">
-
-    <!-- TOP PROFILE -->
     <div class="top-card">
         <div class="profile-wrap">
-
             <div class="avatar">
                 <img src="logo.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3504/3504113.png'">
             </div>
-
             <div>
-                <div class="member-title">MEMBER</div>
-
+                <div class="member-title italic oswald">MEMBER</div>
                 <div class="uid-box">
                     <span id="userIdText">UID | LOADING...</span>
-
-                    <button onclick="copyId()">
-                        <i class="fas fa-copy"></i>
-                    </button>
+                    <i class="fas fa-copy cursor-pointer" onclick="copyId()"></i>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- BALANCE -->
     <div class="balance-card">
         <div>
-            <p>TOTAL BALANCE</p>
+            <p class="text-[10px] text-slate-400 font-bold tracking-widest">TOTAL BALANCE</p>
             <h1 id="userBalance">₹ 0.00</h1>
         </div>
-
         <button class="wallet-btn" onclick="location.href='deposit.html'">
-            <i class="fas fa-wallet mr-2"></i>WALLET
+            <i class="fas fa-wallet mr-1"></i> WALLET
         </button>
     </div>
 
-    <!-- MENU -->
-    <div class="menu-btn" onclick="location.href='update-password.html'">
-        <div class="menu-left">
-            <i class="fas fa-key"></i>
-            <span>Update Password</span>
+    <div class="menu-btn cursor-pointer" onclick="openModal()">
+        <div class="flex items-center gap-4">
+            <i class="fas fa-key text-yellow-500"></i>
+            <span class="font-semibold text-slate-200">Update Password</span>
         </div>
-
-        <i class="fas fa-chevron-right text-slate-500"></i>
+        <i class="fas fa-chevron-right text-slate-600"></i>
     </div>
 
-    <div class="menu-btn" onclick="location.href='help.html'">
-        <div class="menu-left">
-            <i class="fas fa-headset"></i>
-            <span>Customer Service</span>
+    <div class="menu-btn cursor-pointer" onclick="location.href='help.html'">
+        <div class="flex items-center gap-4">
+            <i class="fas fa-headset text-green-500"></i>
+            <span class="font-semibold text-slate-200">Customer Service</span>
         </div>
-
-        <i class="fas fa-chevron-right text-slate-500"></i>
+        <i class="fas fa-chevron-right text-slate-600"></i>
     </div>
 
-    <!-- LOGOUT -->
     <div class="logout-btn" id="logoutBtn">
         <i class="fas fa-sign-out-alt mr-2"></i> Logout Account
     </div>
 
-    <!-- FEATURES -->
-    <div class="features">
-
-        <div class="feature-box">
-            <i class="fas fa-bolt"></i>
-            <p>Fast Withdraw</p>
-        </div>
-
-        <div class="feature-box">
-            <i class="fas fa-shield-alt"></i>
-            <p>Secure Data</p>
-        </div>
-
-        <div class="feature-box">
-            <i class="fas fa-check-circle"></i>
-            <p>Verified</p>
-        </div>
-
+    <div class="px-6 py-8 text-center opacity-40">
+        <h3 class="oswald text-2xl">IPL <span class="text-red-600">2.0</span></h3>
+        <p class="text-[10px] mt-2 leading-relaxed">Secured Prediction Arena &copy; 2026</p>
     </div>
-
-    <!-- FOOTER -->
-    <div class="footer-brand">
-        <h3>IPL <span>2.0</span></h3>
-
-        <p>
-            Experience the next generation of online prediction gaming.
-            We provide a fair, secure and transparent environment
-            for all our members.
-        </p>
-    </div>
-
 </div>
 
-<!-- BOTTOM NAV -->
+<div id="passwordModal">
+    <div class="modal-content">
+        <h2 class="oswald text-xl mb-4 text-white uppercase italic">Security Update</h2>
+        <form id="updatePassForm" class="space-y-3">
+            <input type="password" id="currentPass" placeholder="Current Password" required class="input-field">
+            <input type="password" id="newPass" placeholder="New Password" required class="input-field">
+            <input type="password" id="confirmPass" placeholder="Confirm New Password" required class="input-field">
+            
+            <div class="flex gap-2 mt-6">
+                <button type="button" onclick="closeModal()" class="flex-1 bg-slate-700 py-3 rounded-xl font-bold text-sm">CANCEL</button>
+                <button type="submit" class="flex-1 bg-red-600 py-3 rounded-xl font-bold text-sm">UPDATE</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="bottom-nav">
-
     <div class="nav-item" onclick="location.href='home.html'">
-        <i class="fas fa-home"></i>
-        Home
+        <i class="fas fa-home"></i> Home
     </div>
-
     <div class="nav-item" onclick="location.href='deposit.html'">
-        <i class="fas fa-wallet"></i>
-        Wallet
+        <i class="fas fa-wallet"></i> Wallet
     </div>
-
     <div class="nav-item" onclick="location.href='refer.html'">
-        <i class="fas fa-users"></i>
-        Refer
+        <i class="fas fa-users"></i> Refer
     </div>
-
-    <div class="nav-item" onclick="location.href='help.html'">
-        <i class="fas fa-headset"></i>
-        Help
-    </div>
-
     <div class="nav-item active">
-        <i class="fas fa-user-circle"></i>
-        Account
+        <i class="fas fa-user-circle"></i> Account
     </div>
-
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -438,15 +207,13 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    // Profile & Balance Logic
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            document.getElementById('userIdText').innerText =
-                "UID | " + user.uid.substring(0, 8).toUpperCase();
-
+            document.getElementById('userIdText').innerText = "UID | " + user.uid.substring(0, 8).toUpperCase();
             onSnapshot(doc(db, "users", user.uid), (docSnap) => {
                 if (docSnap.exists()) {
-                    document.getElementById('userBalance').innerText =
-                        '₹ ' + (docSnap.data().balance || 0).toFixed(2);
+                    document.getElementById('userBalance').innerText = '₹ ' + (docSnap.data().balance || 0).toFixed(2);
                 }
             });
         } else {
@@ -454,18 +221,38 @@
         }
     });
 
+    // Password Update Logic
+    document.getElementById('updatePassForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        const curPass = document.getElementById('currentPass').value;
+        const nPass = document.getElementById('newPass').value;
+        const cPass = document.getElementById('confirmPass').value;
+
+        if(nPass !== cPass) return alert("Passwords don't match!");
+
+        try {
+            const credential = EmailAuthProvider.credential(user.email, curPass);
+            await reauthenticateWithCredential(user, credential);
+            await updatePassword(user, nPass);
+            alert("✅ Password Updated!");
+            closeModal();
+        } catch (err) {
+            alert("❌ Error: " + err.message);
+        }
+    });
+
+    // UI Functions
+    window.openModal = () => document.getElementById('passwordModal').style.display = 'flex';
+    window.closeModal = () => document.getElementById('passwordModal').style.display = 'none';
     window.copyId = () => {
-        const idText = document.getElementById('userIdText').innerText.replace("UID | ", "");
-        navigator.clipboard.writeText(idText);
-        alert("User ID Copied: " + idText);
+        const id = document.getElementById('userIdText').innerText.split('| ')[1];
+        navigator.clipboard.writeText(id);
+        alert("ID Copied!");
     };
 
     document.getElementById('logoutBtn').addEventListener('click', () => {
-        if (confirm("Are you sure you want to logout?")) {
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            });
-        }
+        if (confirm("Logout?")) signOut(auth).then(() => window.location.href = "login.html");
     });
 </script>
 
