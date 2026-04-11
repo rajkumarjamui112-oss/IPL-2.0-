@@ -49,7 +49,6 @@
             box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
         }
 
-        /* Sporty Button Style */
         .btn-action {
             font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
@@ -137,7 +136,7 @@
     </form>
 
     <div class="mt-6 text-center">
-        <a href="dashboard.html" class="text-slate-400 text-xs hover:text-white transition-all">
+        <a href="home.html" class="text-slate-400 text-xs hover:text-white transition-all uppercase tracking-widest font-bold">
             <i class="fas fa-arrow-left mr-1"></i> Back to Arena
         </a>
     </div>
@@ -148,7 +147,6 @@
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    // Same config as your register page
     const firebaseConfig = {
         apiKey: "AIzaSyAj4SXI9ultqGO_AquyFbDj9bbUSuSoRqw",
         authDomain: "ipl2-f8488.firebaseapp.com",
@@ -170,17 +168,17 @@
 
         try {
             await addDoc(collection(db, "tickets"), {
-                userId: user ? user.uid : "anonymous",
-                email: user ? user.email : "guest",
+                userId: user ? user.uid : "guest_user",
+                email: user ? user.email : "guest@example.com",
                 subject: subject,
                 message: message,
                 status: "open",
                 createdAt: new Date().toISOString()
             });
-            alert("🚀 Ticket Raised! Our team will contact you soon.");
+            alert("🚀 Ticket Raised! We'll get back to you.");
             e.target.reset();
         } catch (error) {
-            alert("❌ Failed to send: " + error.message);
+            alert("❌ Error: " + error.message);
         }
     });
 </script>
