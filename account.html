@@ -1,9 +1,3 @@
-<!-- Design ko screenshot jaisa kiya gaya hai.
-Sirf UI / layout change hua hai.
-Firebase logic same hai.
-Profile image ki jagah logo.png use kiya gaya hai.
-Brand name niche IPL 2.0 kar diya. -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,49 +6,64 @@ Brand name niche IPL 2.0 kar diya. -->
 <title>IPL 2.0 - My Account</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-    *{margin:0;padding:0;box-sizing:border-box;}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
     body{
-        background:#050810;
-        color:white;
-        font-family:'Poppins',sans-serif;
+        background:
+            linear-gradient(rgba(15,23,42,0.92), rgba(15,23,42,0.92)),
+            url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=2067');
+        background-size:cover;
+        background-position:center;
+        background-attachment:fixed;
+        min-height:100vh;
         display:flex;
         justify-content:center;
+        font-family:'Poppins',sans-serif;
+        color:#fff;
     }
 
     .mobile-view{
         width:100%;
         max-width:480px;
         min-height:100vh;
-        background:linear-gradient(180deg,#050810 0%,#08101f 100%);
+        background:rgba(10,17,34,0.92);
+        backdrop-filter:blur(10px);
         position:relative;
         padding-bottom:90px;
+        overflow:hidden;
     }
 
-    /* TOP PROFILE */
     .top-card{
-        background: linear-gradient(180deg,#facc15 0%, #d4a60f 100%);
-        border-bottom-left-radius: 40px;
-        border-bottom-right-radius: 40px;
-        padding: 30px 20px 40px;
-        position: relative;
+        background:linear-gradient(135deg,#ef4444 0%, #b91c1c 100%);
+        border-bottom-left-radius:35px;
+        border-bottom-right-radius:35px;
+        padding:25px 20px 55px;
+        position:relative;
+        box-shadow:0 15px 30px rgba(239,68,68,0.2);
     }
 
     .profile-wrap{
         display:flex;
         align-items:center;
-        gap:18px;
+        gap:16px;
     }
 
     .avatar{
         width:78px;
         height:78px;
         border-radius:50%;
-        border:3px solid #111;
+        background:#1e293b;
+        border:4px solid rgba(255,255,255,0.9);
         overflow:hidden;
-        background:#111827;
+        box-shadow:0 0 20px rgba(255,255,255,0.15);
         flex-shrink:0;
     }
 
@@ -64,60 +73,93 @@ Brand name niche IPL 2.0 kar diya. -->
         object-fit:cover;
     }
 
-    .profile-text h2{
-        font-size:18px;
-        font-weight:700;
-        color:#000;
+    .member-title{
+        font-family:'Oswald',sans-serif;
+        font-size:36px;
+        color:white;
+        letter-spacing:1px;
     }
 
     .uid-box{
         margin-top:8px;
-        background:rgba(0,0,0,0.1);
-        border:1px solid rgba(0,0,0,0.1);
+        background:rgba(255,255,255,0.15);
+        border:1px solid rgba(255,255,255,0.15);
         border-radius:999px;
-        padding:7px 14px;
+        padding:8px 14px;
         display:flex;
         align-items:center;
-        gap:8px;
+        gap:10px;
         width:fit-content;
-        color:#111;
         font-size:12px;
         font-weight:600;
     }
 
-    /* BALANCE CARD */
+    .uid-box button{
+        background:none;
+        border:none;
+        color:#fff;
+        cursor:pointer;
+    }
+
     .balance-card{
-        background:#f8fafc;
-        color:#111827;
-        margin: -25px 18px 20px;
+        margin:-30px 18px 22px;
+        background:rgba(30,41,59,0.96);
+        border-top:4px solid #ef4444;
+        border-bottom:4px solid #22c55e;
         border-radius:24px;
-        padding:20px;
+        padding:22px;
         display:flex;
         justify-content:space-between;
         align-items:center;
-        box-shadow:0 10px 20px rgba(0,0,0,0.2);
+        box-shadow:0 20px 30px rgba(0,0,0,0.4);
+        position:relative;
+        z-index:2;
+        flex-wrap:wrap;
+        gap:15px;
+    }
+
+    .balance-card p{
+        font-size:12px;
+        color:#94a3b8;
+        font-weight:700;
+        letter-spacing:1px;
+    }
+
+    .balance-card h1{
+        font-size:clamp(36px,7vw,52px);
+        color:#22c55e;
+        font-weight:700;
+        margin-top:4px;
+        line-height:1;
+        word-break:break-word;
     }
 
     .wallet-btn{
-        background:#000;
-        color:#facc15;
-        padding:10px 18px;
-        border-radius:16px;
+        background:linear-gradient(135deg,#ef4444 0%, #b91c1c 100%);
+        padding:12px 18px;
+        border-radius:14px;
+        color:#fff;
         font-weight:700;
-        font-size:13px;
+        border:none;
+        cursor:pointer;
+        white-space:nowrap;
     }
 
-    /* MENU BUTTONS */
     .menu-btn{
         margin:14px 18px;
-        background:linear-gradient(90deg,#131c2a,#18202f);
-        border:1px solid rgba(255,255,255,0.05);
+        background:rgba(255,255,255,0.04);
+        border:1px solid rgba(255,255,255,0.06);
+        border-radius:18px;
         padding:18px;
-        border-radius:20px;
         display:flex;
-        align-items:center;
         justify-content:space-between;
+        align-items:center;
         cursor:pointer;
+        transition:0.3s;
+    }
+
+    .menu-btn:hover{
+        background:rgba(239,68,68,0.06);
     }
 
     .menu-left{
@@ -127,8 +169,9 @@ Brand name niche IPL 2.0 kar diya. -->
     }
 
     .menu-left i{
-        font-size:20px;
         color:#facc15;
+        font-size:20px;
+        width:20px;
     }
 
     .menu-left span{
@@ -137,68 +180,81 @@ Brand name niche IPL 2.0 kar diya. -->
     }
 
     .logout-btn{
-        margin:18px;
-        border:1px solid #ef4444;
-        color:#ef4444;
-        background:rgba(239,68,68,0.04);
+        margin:20px 18px;
         padding:18px;
-        border-radius:20px;
+        border-radius:18px;
+        border:1px solid rgba(239,68,68,0.7);
+        background:rgba(239,68,68,0.04);
+        color:#ef4444;
         text-align:center;
         font-weight:700;
         cursor:pointer;
+        transition:0.3s;
     }
 
-    /* BADGES */
+    .logout-btn:hover{
+        background:rgba(239,68,68,0.1);
+    }
+
     .features{
         display:flex;
         justify-content:space-around;
-        text-align:center;
         margin:30px 15px 20px;
+        text-align:center;
+        gap:10px;
     }
 
-    .features i{
+    .feature-box{
+        flex:1;
+    }
+
+    .feature-box i{
         color:#facc15;
         font-size:26px;
         margin-bottom:8px;
     }
 
-    .features p{
+    .feature-box p{
         font-size:11px;
         color:#94a3b8;
     }
 
-    /* FOOTER */
     .footer-brand{
-        border-top:1px solid rgba(255,255,255,0.06);
+        border-top:1px solid rgba(255,255,255,0.05);
         margin-top:20px;
-        padding:22px 25px;
+        padding:25px 22px;
         text-align:center;
     }
 
     .footer-brand h3{
-        color:#facc15;
-        font-size:18px;
-        font-weight:700;
+        font-family:'Oswald',sans-serif;
+        color:#ef4444;
+        font-size:32px;
+        letter-spacing:1px;
+    }
+
+    .footer-brand span{
+        color:#22c55e;
     }
 
     .footer-brand p{
         margin-top:10px;
         font-size:13px;
-        color:#64748b;
+        color:#94a3b8;
         line-height:1.7;
     }
 
-    /* BOTTOM NAV */
     .bottom-nav{
         position:fixed;
         bottom:0;
         width:100%;
         max-width:480px;
-        background:#1f2937;
-        border-top:1px solid rgba(255,255,255,0.05);
+        background:rgba(30,41,59,0.95);
+        border-top:1px solid rgba(255,255,255,0.06);
         display:flex;
         justify-content:space-around;
         padding:12px 0;
+        backdrop-filter:blur(8px);
     }
 
     .nav-item{
@@ -215,7 +271,26 @@ Brand name niche IPL 2.0 kar diya. -->
     }
 
     .nav-item.active{
-        color:#facc15;
+        color:#ef4444;
+    }
+
+    @media(max-width:480px){
+        .member-title{
+            font-size:28px;
+        }
+
+        .balance-card{
+            flex-direction:column;
+            align-items:flex-start;
+        }
+
+        .wallet-btn{
+            width:100%;
+        }
+
+        .menu-left span{
+            font-size:15px;
+        }
     }
 </style>
 </head>
@@ -223,44 +298,48 @@ Brand name niche IPL 2.0 kar diya. -->
 
 <div class="mobile-view">
 
-    <!-- TOP -->
+    <!-- TOP PROFILE -->
     <div class="top-card">
         <div class="profile-wrap">
+
             <div class="avatar">
                 <img src="logo.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3504/3504113.png'">
             </div>
 
-            <div class="profile-text">
-                <h2>Member</h2>
+            <div>
+                <div class="member-title">MEMBER</div>
 
                 <div class="uid-box">
                     <span id="userIdText">UID | LOADING...</span>
-                    <button onclick="copyId()" style="background:none;border:none;color:#111;cursor:pointer;">
+
+                    <button onclick="copyId()">
                         <i class="fas fa-copy"></i>
                     </button>
                 </div>
             </div>
+
         </div>
     </div>
 
     <!-- BALANCE -->
     <div class="balance-card">
         <div>
-            <p style="font-size:14px;color:#475569;font-weight:700;">TOTAL BALANCE</p>
-            <h1 id="userBalance" style="font-size:48px;font-weight:700;">₹ 0.00</h1>
+            <p>TOTAL BALANCE</p>
+            <h1 id="userBalance">₹ 0.00</h1>
         </div>
 
         <button class="wallet-btn" onclick="location.href='deposit.html'">
-            <i class="fas fa-wallet mr-1"></i> WALLET
+            <i class="fas fa-wallet mr-2"></i>WALLET
         </button>
     </div>
 
-    <!-- BUTTONS -->
+    <!-- MENU -->
     <div class="menu-btn" onclick="location.href='update-password.html'">
         <div class="menu-left">
             <i class="fas fa-key"></i>
             <span>Update Password</span>
         </div>
+
         <i class="fas fa-chevron-right text-slate-500"></i>
     </div>
 
@@ -269,6 +348,7 @@ Brand name niche IPL 2.0 kar diya. -->
             <i class="fas fa-headset"></i>
             <span>Customer Service</span>
         </div>
+
         <i class="fas fa-chevron-right text-slate-500"></i>
     </div>
 
@@ -279,26 +359,32 @@ Brand name niche IPL 2.0 kar diya. -->
 
     <!-- FEATURES -->
     <div class="features">
-        <div>
+
+        <div class="feature-box">
             <i class="fas fa-bolt"></i>
             <p>Fast Withdraw</p>
         </div>
-        <div>
+
+        <div class="feature-box">
             <i class="fas fa-shield-alt"></i>
             <p>Secure Data</p>
         </div>
-        <div>
+
+        <div class="feature-box">
             <i class="fas fa-check-circle"></i>
             <p>Verified</p>
         </div>
+
     </div>
 
     <!-- FOOTER -->
     <div class="footer-brand">
-        <h3>IPL 2.0 - Official Entertainment</h3>
+        <h3>IPL <span>2.0</span></h3>
+
         <p>
             Experience the next generation of online prediction gaming.
-            We provide a fair, secure, and transparent environment for all our members.
+            We provide a fair, secure and transparent environment
+            for all our members.
         </p>
     </div>
 
@@ -306,6 +392,7 @@ Brand name niche IPL 2.0 kar diya. -->
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
+
     <div class="nav-item" onclick="location.href='home.html'">
         <i class="fas fa-home"></i>
         Home
@@ -330,6 +417,7 @@ Brand name niche IPL 2.0 kar diya. -->
         <i class="fas fa-user-circle"></i>
         Account
     </div>
+
 </div>
 
 <script type="module">
