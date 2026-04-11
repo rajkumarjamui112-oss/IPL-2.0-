@@ -1,131 +1,334 @@
+<!-- Design ko screenshot jaisa kiya gaya hai.
+Sirf UI / layout change hua hai.
+Firebase logic same hai.
+Profile image ki jagah logo.png use kiya gaya hai.
+Brand name niche IPL 2.0 kar diya. -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPL 2.0 - My Account</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600&display=swap');
-        body { background-color: #050810; color: white; font-family: 'Poppins', sans-serif; margin: 0; display: flex; justify-content: center; }
-        .bebas { font-family: 'Bebas Neue', sans-serif; }
-        .mobile-view { width: 100%; max-width: 480px; background: #0a1122; min-height: 100vh; position: relative; padding-bottom: 80px; }
-        
-        /* Avatar Glow Effect */
-        .avatar-container {
-            width: 100px; height: 100px; border-radius: 50%;
-            border: 3px solid #ef4444; padding: 3px;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
-            margin: 20px auto; overflow: hidden;
-        }
-        .avatar-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPL 2.0 - My Account</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-        /* Glassmorphism Card */
-        .info-card {
-            background: linear-gradient(145deg, #161d2f, #0a1122);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px; padding: 20px; margin: 15px;
-        }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+        background:#050810;
+        color:white;
+        font-family:'Poppins',sans-serif;
+        display:flex;
+        justify-content:center;
+    }
 
-        /* Horizontal Menu */
-        .horizontal-line {
-            display: flex; justify-content: space-around;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 15px 0; margin: 20px 0;
-        }
-        .menu-item { text-align: center; cursor: pointer; transition: 0.3s; }
-        .menu-item:active { transform: scale(0.9); }
-        .menu-item i { font-size: 20px; margin-bottom: 5px; color: #ef4444; }
-        .menu-item p { font-size: 10px; font-weight: bold; text-transform: uppercase; }
+    .mobile-view{
+        width:100%;
+        max-width:480px;
+        min-height:100vh;
+        background:linear-gradient(180deg,#050810 0%,#08101f 100%);
+        position:relative;
+        padding-bottom:90px;
+    }
 
-        /* Vertical Help Button */
-        .vertical-btn {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 15px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: space-between;
-            margin: 10px 15px; transition: 0.3s;
-        }
-        .vertical-btn:active { background: rgba(239, 68, 68, 0.1); }
+    /* TOP PROFILE */
+    .top-card{
+        background: linear-gradient(180deg,#facc15 0%, #d4a60f 100%);
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+        padding: 30px 20px 40px;
+        position: relative;
+    }
 
-        .btn-logout {
-            margin: 30px 15px; background: #1e293b; color: #ef4444;
-            padding: 15px; border-radius: 12px; text-align: center;
-            font-weight: bold; border: 1px solid rgba(239,68,68,0.2);
-            cursor: pointer;
-        }
-    </style>
+    .profile-wrap{
+        display:flex;
+        align-items:center;
+        gap:18px;
+    }
+
+    .avatar{
+        width:78px;
+        height:78px;
+        border-radius:50%;
+        border:3px solid #111;
+        overflow:hidden;
+        background:#111827;
+        flex-shrink:0;
+    }
+
+    .avatar img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+    }
+
+    .profile-text h2{
+        font-size:18px;
+        font-weight:700;
+        color:#000;
+    }
+
+    .uid-box{
+        margin-top:8px;
+        background:rgba(0,0,0,0.1);
+        border:1px solid rgba(0,0,0,0.1);
+        border-radius:999px;
+        padding:7px 14px;
+        display:flex;
+        align-items:center;
+        gap:8px;
+        width:fit-content;
+        color:#111;
+        font-size:12px;
+        font-weight:600;
+    }
+
+    /* BALANCE CARD */
+    .balance-card{
+        background:#f8fafc;
+        color:#111827;
+        margin: -25px 18px 20px;
+        border-radius:24px;
+        padding:20px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        box-shadow:0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .wallet-btn{
+        background:#000;
+        color:#facc15;
+        padding:10px 18px;
+        border-radius:16px;
+        font-weight:700;
+        font-size:13px;
+    }
+
+    /* MENU BUTTONS */
+    .menu-btn{
+        margin:14px 18px;
+        background:linear-gradient(90deg,#131c2a,#18202f);
+        border:1px solid rgba(255,255,255,0.05);
+        padding:18px;
+        border-radius:20px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        cursor:pointer;
+    }
+
+    .menu-left{
+        display:flex;
+        align-items:center;
+        gap:15px;
+    }
+
+    .menu-left i{
+        font-size:20px;
+        color:#facc15;
+    }
+
+    .menu-left span{
+        font-size:16px;
+        font-weight:600;
+    }
+
+    .logout-btn{
+        margin:18px;
+        border:1px solid #ef4444;
+        color:#ef4444;
+        background:rgba(239,68,68,0.04);
+        padding:18px;
+        border-radius:20px;
+        text-align:center;
+        font-weight:700;
+        cursor:pointer;
+    }
+
+    /* BADGES */
+    .features{
+        display:flex;
+        justify-content:space-around;
+        text-align:center;
+        margin:30px 15px 20px;
+    }
+
+    .features i{
+        color:#facc15;
+        font-size:26px;
+        margin-bottom:8px;
+    }
+
+    .features p{
+        font-size:11px;
+        color:#94a3b8;
+    }
+
+    /* FOOTER */
+    .footer-brand{
+        border-top:1px solid rgba(255,255,255,0.06);
+        margin-top:20px;
+        padding:22px 25px;
+        text-align:center;
+    }
+
+    .footer-brand h3{
+        color:#facc15;
+        font-size:18px;
+        font-weight:700;
+    }
+
+    .footer-brand p{
+        margin-top:10px;
+        font-size:13px;
+        color:#64748b;
+        line-height:1.7;
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav{
+        position:fixed;
+        bottom:0;
+        width:100%;
+        max-width:480px;
+        background:#1f2937;
+        border-top:1px solid rgba(255,255,255,0.05);
+        display:flex;
+        justify-content:space-around;
+        padding:12px 0;
+    }
+
+    .nav-item{
+        text-align:center;
+        font-size:12px;
+        color:#94a3b8;
+        cursor:pointer;
+    }
+
+    .nav-item i{
+        display:block;
+        font-size:22px;
+        margin-bottom:4px;
+    }
+
+    .nav-item.active{
+        color:#facc15;
+    }
+</style>
 </head>
 <body>
 
 <div class="mobile-view">
-    <div class="p-6 text-center">
-        <div class="avatar-container">
-            <img src="https://wallpapers.com/images/hd/virat-kohli-animated-cool-profile-picture-3u80x0r0336pms3t.jpg" alt="Player">
-        </div>
-        <h2 class="bebas text-3xl tracking-wider">CRICKET <span class="text-red-500">PRO</span></h2>
-        
-        <div class="flex items-center justify-center gap-2 mt-2 bg-black/30 w-fit mx-auto px-4 py-1 rounded-full border border-white/5">
-            <p class="text-[10px] text-slate-400 font-mono" id="userIdText">ID: LOADING...</p>
-            <button onclick="copyId()" class="text-red-500 text-[10px]"><i class="fas fa-copy"></i></button>
-        </div>
-    </div>
 
-    <div class="info-card text-center">
-        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[3px]">Total Balance</p>
-        <h1 class="text-4xl font-bold mt-1 text-green-500" id="userBalance">₹ 0.00</h1>
-        <div class="flex justify-center gap-2 mt-3">
-            <span class="bg-green-500/10 text-green-500 text-[8px] px-2 py-1 rounded font-bold uppercase">Verified Account</span>
-        </div>
-    </div>
-
-    <div class="horizontal-line">
-        <div class="menu-item" onclick="location.href='deposit.html'">
-            <i class="fas fa-wallet"></i>
-            <p>Deposit</p>
-        </div>
-        <div class="menu-item" onclick="location.href='withdraw.html'">
-            <i class="fas fa-hand-holding-usd"></i>
-            <p>Withdraw</p>
-        </div>
-        <div class="menu-item" onclick="location.href='history.html'">
-            <i class="fas fa-list-ul"></i>
-            <p>History</p>
-        </div>
-    </div>
-
-    <p class="px-5 text-[10px] text-slate-500 font-bold uppercase mb-2">Support & Info</p>
-    
-    <div class="vertical-btn" onclick="location.href='help.html'">
-        <div class="flex items-center gap-4">
-            <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
-                <i class="fas fa-headset text-blue-500"></i>
+    <!-- TOP -->
+    <div class="top-card">
+        <div class="profile-wrap">
+            <div class="avatar">
+                <img src="logo.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3504/3504113.png'">
             </div>
-            <div>
-                <p class="text-sm font-bold">Help Center</p>
-                <p class="text-[9px] text-slate-500">Contact support 24/7</p>
+
+            <div class="profile-text">
+                <h2>Member</h2>
+
+                <div class="uid-box">
+                    <span id="userIdText">UID | LOADING...</span>
+                    <button onclick="copyId()" style="background:none;border:none;color:#111;cursor:pointer;">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
             </div>
         </div>
-        <i class="fas fa-chevron-right text-slate-600 text-xs"></i>
     </div>
 
-    <div class="vertical-btn" onclick="location.href='rules.html'">
-        <div class="flex items-center gap-4">
-            <div class="w-10 h-10 bg-yellow-500/10 rounded-lg flex items-center justify-center">
-                <i class="fas fa-file-alt text-yellow-500"></i>
-            </div>
-            <div>
-                <p class="text-sm font-bold">Game Rules</p>
-                <p class="text-[9px] text-slate-500">Terms and conditions</p>
-            </div>
+    <!-- BALANCE -->
+    <div class="balance-card">
+        <div>
+            <p style="font-size:14px;color:#475569;font-weight:700;">TOTAL BALANCE</p>
+            <h1 id="userBalance" style="font-size:48px;font-weight:700;">₹ 0.00</h1>
         </div>
-        <i class="fas fa-chevron-right text-slate-600 text-xs"></i>
+
+        <button class="wallet-btn" onclick="location.href='deposit.html'">
+            <i class="fas fa-wallet mr-1"></i> WALLET
+        </button>
     </div>
 
-    <div class="btn-logout" id="logoutBtn">
-        <i class="fas fa-sign-out-alt mr-2"></i> LOGOUT ACCOUNT
+    <!-- BUTTONS -->
+    <div class="menu-btn" onclick="location.href='update-password.html'">
+        <div class="menu-left">
+            <i class="fas fa-key"></i>
+            <span>Update Password</span>
+        </div>
+        <i class="fas fa-chevron-right text-slate-500"></i>
+    </div>
+
+    <div class="menu-btn" onclick="location.href='help.html'">
+        <div class="menu-left">
+            <i class="fas fa-headset"></i>
+            <span>Customer Service</span>
+        </div>
+        <i class="fas fa-chevron-right text-slate-500"></i>
+    </div>
+
+    <!-- LOGOUT -->
+    <div class="logout-btn" id="logoutBtn">
+        <i class="fas fa-sign-out-alt mr-2"></i> Logout Account
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features">
+        <div>
+            <i class="fas fa-bolt"></i>
+            <p>Fast Withdraw</p>
+        </div>
+        <div>
+            <i class="fas fa-shield-alt"></i>
+            <p>Secure Data</p>
+        </div>
+        <div>
+            <i class="fas fa-check-circle"></i>
+            <p>Verified</p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-brand">
+        <h3>IPL 2.0 - Official Entertainment</h3>
+        <p>
+            Experience the next generation of online prediction gaming.
+            We provide a fair, secure, and transparent environment for all our members.
+        </p>
+    </div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+    <div class="nav-item" onclick="location.href='home.html'">
+        <i class="fas fa-home"></i>
+        Home
+    </div>
+
+    <div class="nav-item" onclick="location.href='deposit.html'">
+        <i class="fas fa-wallet"></i>
+        Wallet
+    </div>
+
+    <div class="nav-item" onclick="location.href='refer.html'">
+        <i class="fas fa-users"></i>
+        Refer
+    </div>
+
+    <div class="nav-item" onclick="location.href='help.html'">
+        <i class="fas fa-headset"></i>
+        Help
+    </div>
+
+    <div class="nav-item active">
+        <i class="fas fa-user-circle"></i>
+        Account
     </div>
 </div>
 
@@ -149,12 +352,13 @@
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            document.getElementById('userIdText').innerText = "ID: " + user.uid.substring(0, 10).toUpperCase();
-            
-            // Real-time Balance Update
-            onSnapshot(doc(db, "users", user.uid), (doc) => {
-                if (doc.exists()) {
-                    document.getElementById('userBalance').innerText = '₹ ' + (doc.data().balance || 0).toFixed(2);
+            document.getElementById('userIdText').innerText =
+                "UID | " + user.uid.substring(0, 8).toUpperCase();
+
+            onSnapshot(doc(db, "users", user.uid), (docSnap) => {
+                if (docSnap.exists()) {
+                    document.getElementById('userBalance').innerText =
+                        '₹ ' + (docSnap.data().balance || 0).toFixed(2);
                 }
             });
         } else {
@@ -162,21 +366,20 @@
         }
     });
 
-    // Copy ID Function
     window.copyId = () => {
-        const idText = document.getElementById('userIdText').innerText.replace("ID: ", "");
+        const idText = document.getElementById('userIdText').innerText.replace("UID | ", "");
         navigator.clipboard.writeText(idText);
         alert("User ID Copied: " + idText);
     };
 
-    // Logout Function
     document.getElementById('logoutBtn').addEventListener('click', () => {
-        if(confirm("Are you sure you want to logout?")) {
+        if (confirm("Are you sure you want to logout?")) {
             signOut(auth).then(() => {
                 window.location.href = "login.html";
             });
         }
     });
 </script>
+
 </body>
 </html>
